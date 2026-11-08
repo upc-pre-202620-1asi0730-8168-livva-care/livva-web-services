@@ -1,12 +1,25 @@
+using System.Text;
+using System.Text.Json.Serialization;
+using LivvaPlatform.API.IdentityAndProfileManagement.Application.Internal.CommandServices;
+using LivvaPlatform.API.IdentityAndProfileManagement.Application.Internal.OutboundServices;
+using LivvaPlatform.API.IdentityAndProfileManagement.Application.Internal.QueryServices;
+using LivvaPlatform.API.IdentityAndProfileManagement.Application.Services;
+using LivvaPlatform.API.IdentityAndProfileManagement.Domain.Repositories;
+using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Hashing.BCrypt.Services;
+using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Persistence.EFC.Repositories;
+using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Tokens.JWT.Configuration;
+using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Tokens.JWT.Services;
 using LivvaPlatform.API.Resources;
 using LivvaPlatform.API.Shared.Domain.Repositories;
 using LivvaPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +34,7 @@ builder.Services.AddLocalization();
 
 // Configure Kebab Case Route Naming Convention
 builder.Services.AddControllers(options => options.Conventions.Add(new KebabCaseRouteNamingConvention()))
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
     .AddDataAnnotationsLocalization(options =>
         options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(SharedResource)))
     .ConfigureApiBehaviorOptions(options =>
@@ -57,18 +71,47 @@ builder.Services.AddProblemDetails(options =>
     };
 });
 
-// Generate the OpenAPI document with ASP.NET Core's built-in support.
-builder.Services.AddOpenApi();
+// Generate the OpenAPI document with ASP.NET Core's built-in support (XML comments are included automatically).
+builder.Services.AddOpenApi(options => options.AddDocumentTransformer<BearerSecuritySchemeTransformer>());
 
 // CORS Configuration
-// TODO: restrict the allowed origins to the Livva web application domain once it is deployed.
+// Allowed origins are read from Cors:AllowedOrigins (comma-separated). When empty, any origin is allowed.
+var allowedOrigins = (builder.Configuration["Cors:AllowedOrigins"] ?? string.Empty)
+    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllPolicy", policy =>
-        policy.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+    options.AddPolicy("LivvaCorsPolicy", policy =>
+    {
+        if (allowedOrigins.Length == 0) policy.AllowAnyOrigin();
+        else policy.WithOrigins(allowedOrigins);
+        policy.AllowAnyMethod().AllowAnyHeader();
+    });
 });
+
+// JWT Authentication Configuration
+// The secret supports %VARIABLE% expansion (for example, %JWT_SECRET% on Railway).
+var tokenSettings = builder.Configuration.GetSection(TokenSettings.SectionName).Get<TokenSettings>() ?? new TokenSettings();
+tokenSettings.Secret = Environment.ExpandEnvironmentVariables(tokenSettings.Secret);
+if (string.IsNullOrWhiteSpace(tokenSettings.Secret) || tokenSettings.Secret.Contains('%') || tokenSettings.Secret.Length < 32)
+    throw new InvalidOperationException("TokenSettings:Secret must be configured with at least 32 characters.");
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection(TokenSettings.SectionName));
+builder.Services.PostConfigure<TokenSettings>(settings => settings.Secret = tokenSettings.Secret);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = tokenSettings.Issuer,
+            ValidateAudience = true,
+            ValidAudience = tokenSettings.Audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenSettings.Secret)),
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.FromMinutes(1)
+        };
+    });
+builder.Services.AddAuthorization();
 
 // Add Database Connection
 
@@ -96,14 +139,26 @@ builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
 // Shared Bounded Context Injection Configuration
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+// Identity and Profile Management Bounded Context Injection Configuration
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+builder.Services.AddScoped<IHashingService, HashingService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+builder.Services.AddScoped<IUserProfileCommandService, UserProfileCommandService>();
+builder.Services.AddScoped<IUserProfileQueryService, UserProfileQueryService>();
+
 var app = builder.Build();
 
-// TODO: apply pending migrations on startup once the first EF Core migration is added:
-// using (var scope = app.Services.CreateScope())
-// {
-//     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//     context.Database.Migrate();
-// }
+// Apply pending migrations on startup (safe to call even when schema is up to date).
+// Non-relational providers (used by integration tests) create the schema directly.
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    if (context.Database.IsRelational()) context.Database.Migrate();
+    else context.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
@@ -117,10 +172,11 @@ var localizationOptions = new RequestLocalizationOptions()
 localizationOptions.ApplyCurrentCultureToResponseHeaders = true;
 app.UseRequestLocalization(localizationOptions);
 
-app.UseCors("AllowAllPolicy");
+app.UseCors("LivvaCorsPolicy");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 // OpenAPI, Scalar and Swagger UI are available in all environments.

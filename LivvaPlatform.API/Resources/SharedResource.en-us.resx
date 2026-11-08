@@ -23,4 +23,52 @@
     <data name="InvalidModelStateTitle" xml:space="preserve">
         <value>The request contains invalid values.</value>
     </data>
+    <data name="EmailAlreadyRegistered" xml:space="preserve">
+        <value>The email address is already registered.</value>
+    </data>
+    <data name="InvalidCredentials" xml:space="preserve">
+        <value>The email or password is incorrect.</value>
+    </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>The user was not found.</value>
+    </data>
+    <data name="UserProfileNotFound" xml:space="preserve">
+        <value>The user profile was not found.</value>
+    </data>
+    <data name="UserProfileAlreadyExists" xml:space="preserve">
+        <value>The user already has a profile.</value>
+    </data>
+    <data name="RequiredFirstName" xml:space="preserve">
+        <value>The first name is required.</value>
+    </data>
+    <data name="InvalidFirstName" xml:space="preserve">
+        <value>The first name must have between 2 and 100 characters.</value>
+    </data>
+    <data name="RequiredLastName" xml:space="preserve">
+        <value>The last name is required.</value>
+    </data>
+    <data name="InvalidLastName" xml:space="preserve">
+        <value>The last name must have between 2 and 100 characters.</value>
+    </data>
+    <data name="RequiredEmail" xml:space="preserve">
+        <value>The email address is required.</value>
+    </data>
+    <data name="InvalidEmail" xml:space="preserve">
+        <value>The email address is not valid.</value>
+    </data>
+    <data name="RequiredPassword" xml:space="preserve">
+        <value>The password is required.</value>
+    </data>
+    <data name="InvalidPassword" xml:space="preserve">
+        <value>The password must have at least 6 characters.</value>
+    </data>
+    <data name="RequiredUserId" xml:space="preserve">
+        <value>The user identifier is required.</value>
+    </data>
+    <data name="RequiredDocumentType" xml:space="preserve">
+        <value>The document type is required.</value>
+    </data>
+    <data name="RequiredDocumentNumber" xml:space="preserve">
+        <value>The document number is required.</value>
+    </data>
 </root>

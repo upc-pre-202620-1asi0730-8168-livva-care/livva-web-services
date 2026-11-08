@@ -33,6 +33,7 @@ The project follows a Domain-Driven Design structure separated into bounded cont
 ```
 livva-web-services/
 ├── LivvaPlatform.API/                  # Web API project
+│   ├── IdentityAndProfileManagement/   # Users, profiles and authentication
 │   ├── Resources/                      # Localization (.resx)
 │   └── Shared/                         # Shared bounded context
 ├── LivvaPlatform.API.Tests/            # Unit tests
@@ -66,7 +67,10 @@ The committed `appsettings.Development.json` uses a placeholder password (`TU_PA
 ```bash
 cd LivvaPlatform.API
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "server=localhost;user=root;password=<your-password>;database=livva-platform"
+dotnet user-secrets set "TokenSettings:Secret" "<a-random-secret-with-at-least-32-characters>"
 ```
+
+The JWT signing secret is required; the API does not start without it. The database `livva-platform` and its tables are created automatically on startup through EF Core migrations.
 
 ### 3) Run the API
 
@@ -82,20 +86,37 @@ dotnet run --project LivvaPlatform.API
 
 ### Database initialization
 
-Once the first EF Core migration is added, pending migrations are applied on startup via `Database.Migrate()`. Add and commit a migration every time the data model changes:
+Pending migrations are applied on startup via `Database.Migrate()`. Add and commit a migration every time the data model changes (the `dotnet-ef` tool is restored with `dotnet tool restore`):
 
 ```bash
+dotnet tool restore
 dotnet ef migrations add <Name> --project LivvaPlatform.API --output-dir Shared/Infrastructure/Persistence/EFC/Migrations
 ```
+
+### Authentication
+
+1. Register an account with `POST /api/v1/authentication/sign-up`.
+2. Sign in with `POST /api/v1/authentication/sign-in` to obtain a JWT.
+3. Send the token in the `Authorization: Bearer <token>` header. In Scalar or Swagger UI, use the Authorize/Authentication button.
+
+### Deployment on Railway
+
+The `Dockerfile` listens on the port provided by Railway in the `PORT` environment variable. Configure these variables in the API service:
+
+| Variable | Value |
+|---|---|
+| `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD`, `MYSQLDATABASE` | References to the Railway MySQL service variables |
+| `JWT_SECRET` | A random secret with at least 32 characters |
+| `Cors__AllowedOrigins` | Comma-separated allowed origins (for example, `https://livva-web-application.web.app`). Empty allows any origin. |
 
 ### Production-style configuration
 
 `LivvaPlatform.API/appsettings.Production.json` supports environment variable expansion:
 
-- `%DATABASE_URL%`
-- `%DATABASE_USER%`
-- `%DATABASE_PASSWORD%`
-- `%DATABASE_SCHEMA%`
+- `%MYSQLHOST%` and `%MYSQLPORT%`
+- `%MYSQLUSER%` and `%MYSQLPASSWORD%`
+- `%MYSQLDATABASE%`
+- `%JWT_SECRET%` (in `appsettings.json`, section `TokenSettings`)
 
 Set `ASPNETCORE_ENVIRONMENT=Production` before running with production settings.
 

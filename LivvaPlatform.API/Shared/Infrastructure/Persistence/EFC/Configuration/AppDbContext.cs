@@ -1,3 +1,4 @@
+using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,8 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     {
         base.OnModelCreating(builder);
 
-        // Bounded context entity configurations are added here as they are implemented.
+        // Identity and Profile Management Bounded Context
+        builder.ApplyIdentityAndProfileManagementConfiguration();
 
         builder.UseSnakeCaseNamingConvention();
     }

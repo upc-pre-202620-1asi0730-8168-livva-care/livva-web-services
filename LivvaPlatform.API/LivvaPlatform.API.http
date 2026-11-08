@@ -1,6 +1,6 @@
 @LivvaPlatform.API_HostAddress = http://localhost:5033
 
-GET {{LivvaPlatform.API_HostAddress}}/weatherforecast/
+GET {{LivvaPlatform.API_HostAddress}}/openapi/v1.json
 Accept: application/json
 
 ###

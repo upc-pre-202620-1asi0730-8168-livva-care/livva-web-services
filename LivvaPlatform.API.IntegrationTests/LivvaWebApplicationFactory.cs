@@ -13,16 +13,19 @@ namespace LivvaPlatform.API.IntegrationTests;
 /// </summary>
 public class LivvaWebApplicationFactory : WebApplicationFactory<Program>
 {
+    private readonly string _databaseName = "livva-platform-tests-" + Guid.NewGuid();
+
     /// <inheritdoc />
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Testing");
+        builder.UseSetting("TokenSettings:Secret", "integration-tests-secret-key-with-at-least-32-chars");
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<DbContextOptions<AppDbContext>>();
             services.RemoveAll<DbContextOptions>();
             services.RemoveAll(typeof(IDbContextOptionsConfiguration<AppDbContext>));
-            services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("livva-platform-tests"));
+            services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase(_databaseName));
         });
     }
 }

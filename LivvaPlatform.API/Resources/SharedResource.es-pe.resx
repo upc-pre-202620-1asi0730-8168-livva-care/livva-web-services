@@ -23,4 +23,52 @@
     <data name="InvalidModelStateTitle" xml:space="preserve">
         <value>La solicitud contiene valores no válidos.</value>
     </data>
+    <data name="EmailAlreadyRegistered" xml:space="preserve">
+        <value>El correo electrónico ya está registrado.</value>
+    </data>
+    <data name="InvalidCredentials" xml:space="preserve">
+        <value>El correo electrónico o la contraseña son incorrectos.</value>
+    </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>No se encontró el usuario.</value>
+    </data>
+    <data name="UserProfileNotFound" xml:space="preserve">
+        <value>No se encontró el perfil del usuario.</value>
+    </data>
+    <data name="UserProfileAlreadyExists" xml:space="preserve">
+        <value>El usuario ya tiene un perfil.</value>
+    </data>
+    <data name="RequiredFirstName" xml:space="preserve">
+        <value>El nombre es obligatorio.</value>
+    </data>
+    <data name="InvalidFirstName" xml:space="preserve">
+        <value>El nombre debe tener entre 2 y 100 caracteres.</value>
+    </data>
+    <data name="RequiredLastName" xml:space="preserve">
+        <value>El apellido es obligatorio.</value>
+    </data>
+    <data name="InvalidLastName" xml:space="preserve">
+        <value>El apellido debe tener entre 2 y 100 caracteres.</value>
+    </data>
+    <data name="RequiredEmail" xml:space="preserve">
+        <value>El correo electrónico es obligatorio.</value>
+    </data>
+    <data name="InvalidEmail" xml:space="preserve">
+        <value>El correo electrónico no es válido.</value>
+    </data>
+    <data name="RequiredPassword" xml:space="preserve">
+        <value>La contraseña es obligatoria.</value>
+    </data>
+    <data name="InvalidPassword" xml:space="preserve">
+        <value>La contraseña debe tener al menos 6 caracteres.</value>
+    </data>
+    <data name="RequiredUserId" xml:space="preserve">
+        <value>El identificador del usuario es obligatorio.</value>
+    </data>
+    <data name="RequiredDocumentType" xml:space="preserve">
+        <value>El tipo de documento es obligatorio.</value>
+    </data>
+    <data name="RequiredDocumentNumber" xml:space="preserve">
+        <value>El número de documento es obligatorio.</value>
+    </data>
 </root>

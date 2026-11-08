@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Identity and Profile Management bounded context: `users` and `user_profiles` tables, sign-up and sign-in with BCrypt password hashing and JWT access tokens, and the `/api/v1/users` and `/api/v1/user-profiles` endpoints (GET, POST and PATCH).
+- Initial EF Core migration, applied automatically on startup.
+- JWT bearer security scheme in the OpenAPI document for Scalar and Swagger UI.
+- Railway deployment support: the container listens on `PORT`, the production connection string uses the Railway MySQL variables, and allowed CORS origins are configurable.
+- Unit and integration tests for the Identity and Profile Management bounded context.
+
 ## [0.1.0] - 2026-11-08
 
 ### Added

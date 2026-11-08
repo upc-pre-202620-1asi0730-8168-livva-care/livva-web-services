@@ -1,0 +1,21 @@
+@startuml
+' Livva Platform Class Diagram
+' TODO: add bounded contexts and classes as they are implemented.
+
+skinparam classAttributeIconSize 0
+
+package "Shared" {
+  interface IBaseRepository<TEntity> {
+    +AddAsync(TEntity, CancellationToken) : Task
+    +FindByIdAsync(int, CancellationToken) : Task<TEntity?>
+    +Update(TEntity) : void
+    +Remove(TEntity) : void
+    +ListAsync(CancellationToken) : Task<IEnumerable<TEntity>>
+  }
+  interface IUnitOfWork {
+    +CompleteAsync(CancellationToken) : Task
+  }
+  interface IAuditableEntity
+}
+
+@enduml

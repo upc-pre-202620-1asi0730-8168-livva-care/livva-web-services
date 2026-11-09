@@ -140,4 +140,28 @@
     <data name="InvalidParticipationPercentage" xml:space="preserve">
         <value>El porcentaje de participación debe ser mayor que 0 y como máximo 100.</value>
     </data>
+    <data name="PolicyNotFound" xml:space="preserve">
+        <value>No se encontró la póliza.</value>
+    </data>
+    <data name="PolicyNumberAlreadyRegistered" xml:space="preserve">
+        <value>El número de póliza ya está registrado.</value>
+    </data>
+    <data name="PolicyNotRenewable" xml:space="preserve">
+        <value>La póliza no se puede renovar en su estado actual.</value>
+    </data>
+    <data name="RenewalAlreadyRequested" xml:space="preserve">
+        <value>La póliza ya tiene una solicitud de renovación en curso.</value>
+    </data>
+    <data name="RenewalNotFound" xml:space="preserve">
+        <value>No se encontró la renovación.</value>
+    </data>
+    <data name="PolicyCoverageNotFound" xml:space="preserve">
+        <value>No se encontró la cobertura de la póliza.</value>
+    </data>
+    <data name="PolicyDocumentNotFound" xml:space="preserve">
+        <value>No se encontró el documento de la póliza.</value>
+    </data>
+    <data name="RequiredPolicyNumber" xml:space="preserve">
+        <value>El número de póliza es obligatorio.</value>
+    </data>
 </root>

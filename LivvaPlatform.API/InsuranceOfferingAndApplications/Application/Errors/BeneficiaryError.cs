@@ -5,6 +5,9 @@ namespace LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Errors;
 /// </summary>
 public enum BeneficiaryError
 {
+    /// <summary>The policy does not exist.</summary>
+    PolicyNotFound,
+
     /// <summary>The beneficiary does not exist.</summary>
     BeneficiaryNotFound,
 

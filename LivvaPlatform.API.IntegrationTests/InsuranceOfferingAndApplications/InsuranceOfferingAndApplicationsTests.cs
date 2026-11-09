@@ -134,7 +134,14 @@ public class InsuranceOfferingAndApplicationsTests(LivvaWebApplicationFactory fa
     public async Task Beneficiaries_CreateFilterAndPatch_ShouldWork()
     {
         var (client, _) = await AuthenticatedClientAsync();
-        var policyId = Random.Shared.Next(1000, 999999);
+        const long policyId = 2;
+
+        var unknownPolicy = await client.PostAsJsonAsync("/api/v1/beneficiaries", new
+        {
+            policyId = 999999, fullName = "María López", documentType = "DNI", documentNumber = "1", relationship = "spouse",
+            participationPercentage = 50
+        });
+        Assert.Equal(HttpStatusCode.NotFound, unknownPolicy.StatusCode);
 
         var create = await client.PostAsJsonAsync("/api/v1/beneficiaries", new
         {
@@ -152,7 +159,7 @@ public class InsuranceOfferingAndApplicationsTests(LivvaWebApplicationFactory fa
         Assert.Equal(HttpStatusCode.BadRequest, invalid.StatusCode);
 
         var byPolicy = await client.GetFromJsonAsync<JsonElement>($"/api/v1/beneficiaries?policyId={policyId}");
-        Assert.Equal(1, byPolicy.GetArrayLength());
+        Assert.Contains(byPolicy.EnumerateArray(), b => b.GetProperty("id").GetInt64() == beneficiaryId);
 
         var patch = await client.PatchAsJsonAsync($"/api/v1/beneficiaries/{beneficiaryId}", new { participationPercentage = 40 });
         Assert.Equal(HttpStatusCode.OK, patch.StatusCode);

@@ -35,6 +35,7 @@ livva-web-services/
 ├── LivvaPlatform.API/                  # Web API project
 │   ├── IdentityAndProfileManagement/   # Users, profiles and authentication
 │   ├── InsuranceOfferingAndApplications/ # Insurers, products, vehicles, applications, beneficiaries
+│   ├── PolicyManagement/               # Policies, coverages, documents, renewals
 │   ├── Resources/                      # Localization (.resx)
 │   └── Shared/                         # Shared bounded context
 ├── LivvaPlatform.API.Tests/            # Unit tests

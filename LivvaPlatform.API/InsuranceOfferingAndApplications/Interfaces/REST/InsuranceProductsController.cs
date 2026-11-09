@@ -1,3 +1,4 @@
+using LivvaPlatform.API.Shared.Domain.Model.ValueObjects;
 using System.Net.Mime;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Errors;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Services;

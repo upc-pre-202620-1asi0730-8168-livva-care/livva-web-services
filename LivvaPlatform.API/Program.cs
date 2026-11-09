@@ -16,6 +16,13 @@ using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Internal.Qu
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Services;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Repositories;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Infrastructure.Persistence.EFC.Repositories;
+using LivvaPlatform.API.PolicyManagement.Application.ACL;
+using LivvaPlatform.API.PolicyManagement.Application.Internal.CommandServices;
+using LivvaPlatform.API.PolicyManagement.Application.Internal.QueryServices;
+using LivvaPlatform.API.PolicyManagement.Application.Services;
+using LivvaPlatform.API.PolicyManagement.Domain.Repositories;
+using LivvaPlatform.API.PolicyManagement.Infrastructure.Persistence.EFC.Repositories;
+using LivvaPlatform.API.PolicyManagement.Interfaces.ACL;
 using LivvaPlatform.API.Resources;
 using LivvaPlatform.API.Shared.Domain.Repositories;
 using LivvaPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
@@ -172,6 +179,15 @@ builder.Services.AddScoped<IInsuranceApplicationCommandService, InsuranceApplica
 builder.Services.AddScoped<IInsuranceApplicationQueryService, InsuranceApplicationQueryService>();
 builder.Services.AddScoped<IBeneficiaryCommandService, BeneficiaryCommandService>();
 builder.Services.AddScoped<IBeneficiaryQueryService, BeneficiaryQueryService>();
+
+// Policy Management Bounded Context Injection Configuration
+builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
+builder.Services.AddScoped<IPolicyCoverageRepository, PolicyCoverageRepository>();
+builder.Services.AddScoped<IPolicyDocumentRepository, PolicyDocumentRepository>();
+builder.Services.AddScoped<IRenewalRepository, RenewalRepository>();
+builder.Services.AddScoped<IPolicyCommandService, PolicyCommandService>();
+builder.Services.AddScoped<IPolicyQueryService, PolicyQueryService>();
+builder.Services.AddScoped<IPolicyManagementContextFacade, PolicyManagementContextFacade>();
 
 var app = builder.Build();
 

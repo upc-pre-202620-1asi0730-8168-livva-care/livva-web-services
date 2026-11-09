@@ -36,9 +36,11 @@ public class BeneficiariesController(
     /// <returns>The created beneficiary.</returns>
     /// <response code="201">The beneficiary was registered.</response>
     /// <response code="400">The request contains invalid values.</response>
+    /// <response code="404">The policy does not exist.</response>
     [HttpPost]
     [ProducesResponseType(typeof(BeneficiaryResource), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> CreateBeneficiary([FromBody] CreateBeneficiaryResource resource, CancellationToken cancellationToken)
     {
         var result = await commandService.Handle(ResourceAssembler.ToCommand(resource), cancellationToken);
@@ -105,6 +107,7 @@ public class BeneficiariesController(
 
     private ObjectResult ToProblem(BeneficiaryError error) => error switch
     {
+        BeneficiaryError.PolicyNotFound => Problem(title: localizer["PolicyNotFound"].Value, statusCode: StatusCodes.Status404NotFound),
         BeneficiaryError.BeneficiaryNotFound => Problem(title: localizer["BeneficiaryNotFound"].Value, statusCode: StatusCodes.Status404NotFound),
         _ => Problem(title: localizer["InvalidModelStateTitle"].Value, statusCode: StatusCodes.Status400BadRequest)
     };

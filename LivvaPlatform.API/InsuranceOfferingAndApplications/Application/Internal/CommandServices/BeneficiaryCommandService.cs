@@ -6,6 +6,7 @@ using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Model.Commands;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Model.Queries;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Model.ValueObjects;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Repositories;
+using LivvaPlatform.API.PolicyManagement.Interfaces.ACL;
 using LivvaPlatform.API.Shared.Application.Patterns;
 using LivvaPlatform.API.Shared.Domain.Repositories;
 namespace LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Internal.CommandServices;
@@ -14,16 +15,21 @@ namespace LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Interna
 ///     Application service that registers and updates beneficiaries.
 /// </summary>
 /// <param name="beneficiaryRepository">Repository for accessing beneficiaries.</param>
+/// <param name="policyManagementContextFacade">Facade used to verify that the policy exists.</param>
 /// <param name="unitOfWork">Unit of work for managing transaction scope.</param>
 /// <param name="logger">Logger for diagnostic and error reporting.</param>
 public class BeneficiaryCommandService(
     IBeneficiaryRepository beneficiaryRepository,
+    IPolicyManagementContextFacade policyManagementContextFacade,
     IUnitOfWork unitOfWork,
     ILogger<BeneficiaryCommandService> logger) : IBeneficiaryCommandService
 {
     /// <inheritdoc />
     public async Task<Result<Beneficiary, BeneficiaryError>> Handle(CreateBeneficiaryCommand command, CancellationToken cancellationToken = default)
     {
+        if (!await policyManagementContextFacade.PolicyExistsAsync(command.PolicyId, cancellationToken))
+            return new Result<Beneficiary, BeneficiaryError>.Failure(BeneficiaryError.PolicyNotFound);
+
         Beneficiary beneficiary;
         try
         {

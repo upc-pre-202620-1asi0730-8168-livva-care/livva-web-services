@@ -140,4 +140,28 @@
     <data name="InvalidParticipationPercentage" xml:space="preserve">
         <value>The participation percentage must be greater than 0 and at most 100.</value>
     </data>
+    <data name="PolicyNotFound" xml:space="preserve">
+        <value>The policy was not found.</value>
+    </data>
+    <data name="PolicyNumberAlreadyRegistered" xml:space="preserve">
+        <value>The policy number is already registered.</value>
+    </data>
+    <data name="PolicyNotRenewable" xml:space="preserve">
+        <value>The policy cannot be renewed in its current status.</value>
+    </data>
+    <data name="RenewalAlreadyRequested" xml:space="preserve">
+        <value>The policy already has a renewal request in progress.</value>
+    </data>
+    <data name="RenewalNotFound" xml:space="preserve">
+        <value>The renewal was not found.</value>
+    </data>
+    <data name="PolicyCoverageNotFound" xml:space="preserve">
+        <value>The policy coverage was not found.</value>
+    </data>
+    <data name="PolicyDocumentNotFound" xml:space="preserve">
+        <value>The policy document was not found.</value>
+    </data>
+    <data name="RequiredPolicyNumber" xml:space="preserve">
+        <value>The policy number is required.</value>
+    </data>
 </root>

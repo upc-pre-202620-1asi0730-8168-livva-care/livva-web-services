@@ -1,3 +1,4 @@
+using LivvaPlatform.API.Shared.Domain.Model.ValueObjects;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Model.Aggregates;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Model.Commands;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Model.ValueObjects;

@@ -559,6 +559,316 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                     b.ToTable("vehicle_insurance_applications");
                 });
 
+            modelBuilder.Entity("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.Policy", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<long>("ApplicationId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("application_id");
+
+                    b.Property<decimal>("CoverageAmount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("coverage_amount");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("date")
+                        .HasColumnName("expiration_date");
+
+                    b.Property<string>("InsuranceType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("insurance_type");
+
+                    b.Property<string>("PolicyNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("policy_number");
+
+                    b.Property<decimal>("PremiumAmount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("premium_amount");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date")
+                        .HasColumnName("start_date");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_policies");
+
+                    b.HasIndex("PolicyNumber")
+                        .IsUnique()
+                        .HasDatabaseName("i_x_policies_policy_number");
+
+                    b.ToTable("policies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            ApplicationId = 1L,
+                            CoverageAmount = 60000m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            ExpirationDate = new DateTime(2027, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InsuranceType = "VEHICLE",
+                            PolicyNumber = "LIV-VEH-0001",
+                            PremiumAmount = 1200m,
+                            StartDate = new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "ACTIVE",
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UserId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            ApplicationId = 2L,
+                            CoverageAmount = 100000m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            ExpirationDate = new DateTime(2027, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InsuranceType = "LIFE",
+                            PolicyNumber = "LIV-LIF-0002",
+                            PremiumAmount = 960m,
+                            StartDate = new DateTime(2026, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "ACTIVE",
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UserId = 1L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            ApplicationId = 3L,
+                            CoverageAmount = 45000m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 8, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            ExpirationDate = new DateTime(2026, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InsuranceType = "VEHICLE",
+                            PolicyNumber = "LIV-VEH-0003",
+                            PremiumAmount = 1080m,
+                            StartDate = new DateTime(2025, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "EXPIRED",
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 7, 31, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UserId = 1L
+                        });
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.PolicyCoverage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<decimal>("CoverageLimit")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("coverage_limit");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("name");
+
+                    b.Property<long>("PolicyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("policy_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_policy_coverages");
+
+                    b.HasIndex("PolicyId")
+                        .HasDatabaseName("i_x_policy_coverages_policy_id");
+
+                    b.ToTable("policy_coverages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CoverageLimit = 60000m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Coverage for damage to the insured vehicle.",
+                            Name = "Vehicle damage",
+                            PolicyId = 1L,
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CoverageLimit = 30000m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Coverage for damage caused to third parties.",
+                            Name = "Third-party liability",
+                            PolicyId = 1L,
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CoverageLimit = 100000m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Financial protection for registered beneficiaries.",
+                            Name = "Life coverage",
+                            PolicyId = 2L,
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        });
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.PolicyDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("DocumentType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("document_type");
+
+                    b.Property<string>("FileUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("file_url");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("name");
+
+                    b.Property<long>("PolicyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("policy_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_policy_documents");
+
+                    b.HasIndex("PolicyId")
+                        .HasDatabaseName("i_x_policy_documents_policy_id");
+
+                    b.ToTable("policy_documents");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DocumentType = "policy",
+                            FileUrl = "",
+                            Name = "Vehicle policy document",
+                            PolicyId = 1L,
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DocumentType = "policy",
+                            FileUrl = "",
+                            Name = "Life policy document",
+                            PolicyId = 2L,
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        });
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.Renewal", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<long>("PolicyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("policy_id");
+
+                    b.Property<DateTime?>("ProposedExpirationDate")
+                        .HasColumnType("date")
+                        .HasColumnName("proposed_expiration_date");
+
+                    b.Property<decimal?>("ProposedPremium")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("proposed_premium");
+
+                    b.Property<DateTimeOffset>("RequestedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("requested_at");
+
+                    b.Property<DateTimeOffset?>("ResolvedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("resolved_at");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_renewals");
+
+                    b.HasIndex("PolicyId")
+                        .HasDatabaseName("i_x_renewals_policy_id");
+
+                    b.ToTable("renewals");
+                });
+
             modelBuilder.Entity("LivvaPlatform.API.IdentityAndProfileManagement.Domain.Model.Aggregates.UserProfile", b =>
                 {
                     b.HasOne("LivvaPlatform.API.IdentityAndProfileManagement.Domain.Model.Aggregates.User", null)
@@ -614,6 +924,36 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_vehicle_insurance_applications_vehicle");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.PolicyCoverage", b =>
+                {
+                    b.HasOne("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.Policy", null)
+                        .WithMany()
+                        .HasForeignKey("PolicyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_policy_coverages_policy");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.PolicyDocument", b =>
+                {
+                    b.HasOne("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.Policy", null)
+                        .WithMany()
+                        .HasForeignKey("PolicyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_policy_documents_policy");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.Renewal", b =>
+                {
+                    b.HasOne("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.Policy", null)
+                        .WithMany()
+                        .HasForeignKey("PolicyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_renewals_policy");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-namespace LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Model.ValueObjects;
+namespace LivvaPlatform.API.Shared.Domain.Model.ValueObjects;
 
 /// <summary>
 ///     Converts domain enumerations to and from the lower-case values used by the Web Application

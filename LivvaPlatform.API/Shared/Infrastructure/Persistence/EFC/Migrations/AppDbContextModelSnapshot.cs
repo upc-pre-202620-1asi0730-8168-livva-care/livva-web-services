@@ -869,6 +869,211 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                     b.ToTable("renewals");
                 });
 
+            modelBuilder.Entity("LivvaPlatform.API.SubscriptionManagement.Domain.Model.Aggregates.SubscriptionPayment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("amount");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)")
+                        .HasColumnName("currency");
+
+                    b.Property<DateTimeOffset?>("PaidAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("paid_at");
+
+                    b.Property<long>("PlanId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("plan_id");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("provider");
+
+                    b.Property<string>("ProviderPaymentId")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("provider_payment_id");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.Property<long>("UserSubscriptionId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_subscription_id");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_subscription_payments");
+
+                    b.HasIndex("UserSubscriptionId")
+                        .HasDatabaseName("i_x_subscription_payments_user_subscription_id");
+
+                    b.ToTable("subscription_payments");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.SubscriptionManagement.Domain.Model.Aggregates.SubscriptionPlan", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("active");
+
+                    b.Property<decimal>("AnnualPrice")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("annual_price");
+
+                    b.Property<string>("Benefits")
+                        .IsRequired()
+                        .HasColumnType("json")
+                        .HasColumnName("benefits");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("description");
+
+                    b.Property<decimal>("MonthlyPrice")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("monthly_price");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_subscription_plans");
+
+                    b.ToTable("subscription_plans");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Active = true,
+                            AnnualPrice = 190m,
+                            Benefits = "[\"basicFeature1\",\"basicFeature2\",\"basicFeature3\",\"basicFeature4\"]",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "basicDescription",
+                            MonthlyPrice = 19m,
+                            Name = "basic",
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Active = true,
+                            AnnualPrice = 390m,
+                            Benefits = "[\"proFeature1\",\"proFeature2\",\"proFeature3\",\"proFeature4\"]",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "proDescription",
+                            MonthlyPrice = 39m,
+                            Name = "pro",
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        });
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.SubscriptionManagement.Domain.Model.Aggregates.UserSubscription", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<string>("BillingCycle")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("billing_cycle");
+
+                    b.Property<DateTimeOffset?>("CancellationRequestedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("cancellation_requested_at");
+
+                    b.Property<DateTimeOffset?>("CancelledAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("cancelled_at");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTimeOffset>("NextBillingDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("next_billing_date");
+
+                    b.Property<long>("PlanId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("plan_id");
+
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("start_date");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_user_subscriptions");
+
+                    b.HasIndex("PlanId")
+                        .HasDatabaseName("i_x_user_subscriptions_plan_id");
+
+                    b.ToTable("user_subscriptions");
+                });
+
             modelBuilder.Entity("LivvaPlatform.API.IdentityAndProfileManagement.Domain.Model.Aggregates.UserProfile", b =>
                 {
                     b.HasOne("LivvaPlatform.API.IdentityAndProfileManagement.Domain.Model.Aggregates.User", null)
@@ -954,6 +1159,26 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_renewals_policy");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.SubscriptionManagement.Domain.Model.Aggregates.SubscriptionPayment", b =>
+                {
+                    b.HasOne("LivvaPlatform.API.SubscriptionManagement.Domain.Model.Aggregates.UserSubscription", null)
+                        .WithMany()
+                        .HasForeignKey("UserSubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_subscription_payments_subscription");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.SubscriptionManagement.Domain.Model.Aggregates.UserSubscription", b =>
+                {
+                    b.HasOne("LivvaPlatform.API.SubscriptionManagement.Domain.Model.Aggregates.SubscriptionPlan", null)
+                        .WithMany()
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_subscriptions_plan");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - JWT bearer security scheme in the OpenAPI document for Scalar and Swagger UI.
 - Railway deployment support: the container listens on `PORT`, the production connection string uses the Railway MySQL variables, and allowed CORS origins are configurable.
 - Unit and integration tests for the Identity and Profile Management bounded context.
+- Insurance Offering and Applications bounded context: insurers and insurance products (with reference data), vehicles, insurance applications with their vehicle and life details, and beneficiaries, exposed under `/api/v1/insurers`, `/api/v1/insurance-products`, `/api/v1/vehicles`, `/api/v1/insurance-applications`, `/api/v1/vehicle-insurance-applications`, `/api/v1/life-insurance-applications` and `/api/v1/beneficiaries`.
+- Anti-corruption layer facade of Identity and Profile Management used to validate users from other bounded contexts.
 
 ## [0.1.0] - 2026-11-08
 

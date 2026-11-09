@@ -34,6 +34,7 @@ The project follows a Domain-Driven Design structure separated into bounded cont
 livva-web-services/
 ├── LivvaPlatform.API/                  # Web API project
 │   ├── IdentityAndProfileManagement/   # Users, profiles and authentication
+│   ├── InsuranceOfferingAndApplications/ # Insurers, products, vehicles, applications, beneficiaries
 │   ├── Resources/                      # Localization (.resx)
 │   └── Shared/                         # Shared bounded context
 ├── LivvaPlatform.API.Tests/            # Unit tests

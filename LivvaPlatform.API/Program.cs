@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using LivvaPlatform.API.IdentityAndProfileManagement.Application.ACL;
 using LivvaPlatform.API.IdentityAndProfileManagement.Application.Internal.CommandServices;
 using LivvaPlatform.API.IdentityAndProfileManagement.Application.Internal.OutboundServices;
 using LivvaPlatform.API.IdentityAndProfileManagement.Application.Internal.QueryServices;
@@ -9,6 +10,12 @@ using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Hashing.BCry
 using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Persistence.EFC.Repositories;
 using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Tokens.JWT.Configuration;
 using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Tokens.JWT.Services;
+using LivvaPlatform.API.IdentityAndProfileManagement.Interfaces.ACL;
+using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Internal.CommandServices;
+using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Internal.QueryServices;
+using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Services;
+using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Repositories;
+using LivvaPlatform.API.InsuranceOfferingAndApplications.Infrastructure.Persistence.EFC.Repositories;
 using LivvaPlatform.API.Resources;
 using LivvaPlatform.API.Shared.Domain.Repositories;
 using LivvaPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
@@ -148,6 +155,23 @@ builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<IUserProfileCommandService, UserProfileCommandService>();
 builder.Services.AddScoped<IUserProfileQueryService, UserProfileQueryService>();
+builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
+
+// Insurance Offering and Applications Bounded Context Injection Configuration
+builder.Services.AddScoped<IInsurerRepository, InsurerRepository>();
+builder.Services.AddScoped<IInsuranceProductRepository, InsuranceProductRepository>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IInsuranceApplicationRepository, InsuranceApplicationRepository>();
+builder.Services.AddScoped<IVehicleInsuranceApplicationRepository, VehicleInsuranceApplicationRepository>();
+builder.Services.AddScoped<ILifeInsuranceApplicationRepository, LifeInsuranceApplicationRepository>();
+builder.Services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
+builder.Services.AddScoped<IOfferingQueryService, OfferingQueryService>();
+builder.Services.AddScoped<IVehicleCommandService, VehicleCommandService>();
+builder.Services.AddScoped<IVehicleQueryService, VehicleQueryService>();
+builder.Services.AddScoped<IInsuranceApplicationCommandService, InsuranceApplicationCommandService>();
+builder.Services.AddScoped<IInsuranceApplicationQueryService, InsuranceApplicationQueryService>();
+builder.Services.AddScoped<IBeneficiaryCommandService, BeneficiaryCommandService>();
+builder.Services.AddScoped<IBeneficiaryQueryService, BeneficiaryQueryService>();
 
 var app = builder.Build();
 

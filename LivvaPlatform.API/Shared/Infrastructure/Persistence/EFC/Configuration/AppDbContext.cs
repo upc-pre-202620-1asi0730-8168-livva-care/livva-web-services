@@ -1,4 +1,5 @@
 using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using LivvaPlatform.API.InsuranceOfferingAndApplications.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,9 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
 
         // Identity and Profile Management Bounded Context
         builder.ApplyIdentityAndProfileManagementConfiguration();
+
+        // Insurance Offering and Applications Bounded Context
+        builder.ApplyInsuranceOfferingAndApplicationsConfiguration();
 
         builder.UseSnakeCaseNamingConvention();
     }

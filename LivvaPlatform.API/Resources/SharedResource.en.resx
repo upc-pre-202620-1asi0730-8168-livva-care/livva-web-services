@@ -71,4 +71,73 @@
     <data name="RequiredDocumentNumber" xml:space="preserve">
         <value>The document number is required.</value>
     </data>
+    <data name="InsurerNotFound" xml:space="preserve">
+        <value>The insurer was not found.</value>
+    </data>
+    <data name="InsuranceProductNotFound" xml:space="preserve">
+        <value>The insurance product was not found.</value>
+    </data>
+    <data name="InsuranceProductNotAvailable" xml:space="preserve">
+        <value>The insurance product does not exist or is not available.</value>
+    </data>
+    <data name="InvalidInsuranceType" xml:space="preserve">
+        <value>The insurance type must be vehicle or life.</value>
+    </data>
+    <data name="VehicleNotFound" xml:space="preserve">
+        <value>The vehicle was not found.</value>
+    </data>
+    <data name="LicensePlateAlreadyRegistered" xml:space="preserve">
+        <value>The license plate is already registered.</value>
+    </data>
+    <data name="VehicleInUse" xml:space="preserve">
+        <value>The vehicle is used by an insurance application and cannot be deleted.</value>
+    </data>
+    <data name="InsuranceApplicationNotFound" xml:space="preserve">
+        <value>The insurance application was not found.</value>
+    </data>
+    <data name="ProductTypeMismatch" xml:space="preserve">
+        <value>The insurance product of the application does not match this kind of application.</value>
+    </data>
+    <data name="ApplicationAlreadyLinked" xml:space="preserve">
+        <value>The insurance application already has vehicle or life details.</value>
+    </data>
+    <data name="BeneficiaryNotFound" xml:space="preserve">
+        <value>The beneficiary was not found.</value>
+    </data>
+    <data name="RequiredLicensePlate" xml:space="preserve">
+        <value>The license plate is required.</value>
+    </data>
+    <data name="RequiredBrand" xml:space="preserve">
+        <value>The brand is required.</value>
+    </data>
+    <data name="RequiredModel" xml:space="preserve">
+        <value>The model is required.</value>
+    </data>
+    <data name="InvalidManufactureYear" xml:space="preserve">
+        <value>The manufacture year is not valid.</value>
+    </data>
+    <data name="InvalidAmount" xml:space="preserve">
+        <value>The amount must be greater than zero.</value>
+    </data>
+    <data name="RequiredProductId" xml:space="preserve">
+        <value>The insurance product identifier is required.</value>
+    </data>
+    <data name="RequiredApplicationId" xml:space="preserve">
+        <value>The insurance application identifier is required.</value>
+    </data>
+    <data name="RequiredVehicleId" xml:space="preserve">
+        <value>The vehicle identifier is required.</value>
+    </data>
+    <data name="RequiredPolicyId" xml:space="preserve">
+        <value>The policy identifier is required.</value>
+    </data>
+    <data name="RequiredFullName" xml:space="preserve">
+        <value>The full name is required.</value>
+    </data>
+    <data name="RequiredRelationship" xml:space="preserve">
+        <value>The relationship is required.</value>
+    </data>
+    <data name="InvalidParticipationPercentage" xml:space="preserve">
+        <value>The participation percentage must be greater than 0 and at most 100.</value>
+    </data>
 </root>

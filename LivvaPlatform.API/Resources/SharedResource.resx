@@ -164,4 +164,46 @@
     <data name="RequiredPolicyNumber" xml:space="preserve">
         <value>The policy number is required.</value>
     </data>
+    <data name="SubscriptionPlanNotFound" xml:space="preserve">
+        <value>The subscription plan was not found.</value>
+    </data>
+    <data name="SubscriptionPlanNotAvailable" xml:space="preserve">
+        <value>The subscription plan does not exist or is not available.</value>
+    </data>
+    <data name="ActiveSubscriptionExists" xml:space="preserve">
+        <value>The user already has an active subscription.</value>
+    </data>
+    <data name="UserSubscriptionNotFound" xml:space="preserve">
+        <value>The subscription was not found.</value>
+    </data>
+    <data name="SubscriptionNotActive" xml:space="preserve">
+        <value>The subscription is not active.</value>
+    </data>
+    <data name="SubscriptionPaymentNotFound" xml:space="preserve">
+        <value>The subscription payment was not found.</value>
+    </data>
+    <data name="InvalidBillingCycle" xml:space="preserve">
+        <value>The billing cycle must be monthly or annual.</value>
+    </data>
+    <data name="InvalidSubscriptionStatus" xml:space="preserve">
+        <value>Only the status cancelled is supported.</value>
+    </data>
+    <data name="InvalidPaymentStatus" xml:space="preserve">
+        <value>The payment status must be pending, approved or failed.</value>
+    </data>
+    <data name="RequiredPlanId" xml:space="preserve">
+        <value>The plan identifier is required.</value>
+    </data>
+    <data name="RequiredUserSubscriptionId" xml:space="preserve">
+        <value>The subscription identifier is required.</value>
+    </data>
+    <data name="RequiredProvider" xml:space="preserve">
+        <value>The payment provider is required.</value>
+    </data>
+    <data name="PaymentProviderNotConfigured" xml:space="preserve">
+        <value>Mercado Pago is not configured.</value>
+    </data>
+    <data name="PaymentProviderUnavailable" xml:space="preserve">
+        <value>Mercado Pago could not be reached.</value>
+    </data>
 </root>

@@ -164,4 +164,46 @@
     <data name="RequiredPolicyNumber" xml:space="preserve">
         <value>El número de póliza es obligatorio.</value>
     </data>
+    <data name="SubscriptionPlanNotFound" xml:space="preserve">
+        <value>No se encontró el plan de suscripción.</value>
+    </data>
+    <data name="SubscriptionPlanNotAvailable" xml:space="preserve">
+        <value>El plan de suscripción no existe o no está disponible.</value>
+    </data>
+    <data name="ActiveSubscriptionExists" xml:space="preserve">
+        <value>El usuario ya tiene una suscripción activa.</value>
+    </data>
+    <data name="UserSubscriptionNotFound" xml:space="preserve">
+        <value>No se encontró la suscripción.</value>
+    </data>
+    <data name="SubscriptionNotActive" xml:space="preserve">
+        <value>La suscripción no está activa.</value>
+    </data>
+    <data name="SubscriptionPaymentNotFound" xml:space="preserve">
+        <value>No se encontró el pago de la suscripción.</value>
+    </data>
+    <data name="InvalidBillingCycle" xml:space="preserve">
+        <value>El ciclo de facturación debe ser monthly o annual.</value>
+    </data>
+    <data name="InvalidSubscriptionStatus" xml:space="preserve">
+        <value>Solo se admite el estado cancelled.</value>
+    </data>
+    <data name="InvalidPaymentStatus" xml:space="preserve">
+        <value>El estado del pago debe ser pending, approved o failed.</value>
+    </data>
+    <data name="RequiredPlanId" xml:space="preserve">
+        <value>El identificador del plan es obligatorio.</value>
+    </data>
+    <data name="RequiredUserSubscriptionId" xml:space="preserve">
+        <value>El identificador de la suscripción es obligatorio.</value>
+    </data>
+    <data name="RequiredProvider" xml:space="preserve">
+        <value>El proveedor de pago es obligatorio.</value>
+    </data>
+    <data name="PaymentProviderNotConfigured" xml:space="preserve">
+        <value>Mercado Pago no está configurado.</value>
+    </data>
+    <data name="PaymentProviderUnavailable" xml:space="preserve">
+        <value>No se pudo contactar con Mercado Pago.</value>
+    </data>
 </root>

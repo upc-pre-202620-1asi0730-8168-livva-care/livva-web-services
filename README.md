@@ -36,6 +36,7 @@ livva-web-services/
 │   ├── IdentityAndProfileManagement/   # Users, profiles and authentication
 │   ├── InsuranceOfferingAndApplications/ # Insurers, products, vehicles, applications, beneficiaries
 │   ├── PolicyManagement/               # Policies, coverages, documents, renewals
+│   ├── SubscriptionManagement/         # Plans, user subscriptions, payments, Mercado Pago orders
 │   ├── Resources/                      # Localization (.resx)
 │   └── Shared/                         # Shared bounded context
 ├── LivvaPlatform.API.Tests/            # Unit tests
@@ -70,6 +71,7 @@ The committed `appsettings.Development.json` uses a placeholder password (`TU_PA
 cd LivvaPlatform.API
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "server=localhost;user=root;password=<your-password>;database=livva-platform"
 dotnet user-secrets set "TokenSettings:Secret" "<a-random-secret-with-at-least-32-characters>"
+dotnet user-secrets set "MercadoPago:AccessToken" "<your-mercado-pago-test-access-token>"
 ```
 
 The JWT signing secret is required; the API does not start without it. The database `livva-platform` and its tables are created automatically on startup through EF Core migrations.
@@ -109,6 +111,7 @@ The `Dockerfile` listens on the port provided by Railway in the `PORT` environme
 |---|---|
 | `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD`, `MYSQLDATABASE` | References to the Railway MySQL service variables |
 | `JWT_SECRET` | A random secret with at least 32 characters |
+| `MERCADO_PAGO_ACCESS_TOKEN` | Mercado Pago access token used by `POST /api/v1/payment-orders` |
 | `Cors__AllowedOrigins` | Comma-separated allowed origins (for example, `https://livva-web-application.web.app`). Empty allows any origin. |
 
 ### Production-style configuration

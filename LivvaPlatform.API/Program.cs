@@ -23,6 +23,14 @@ using LivvaPlatform.API.PolicyManagement.Application.Services;
 using LivvaPlatform.API.PolicyManagement.Domain.Repositories;
 using LivvaPlatform.API.PolicyManagement.Infrastructure.Persistence.EFC.Repositories;
 using LivvaPlatform.API.PolicyManagement.Interfaces.ACL;
+using LivvaPlatform.API.SubscriptionManagement.Application.Internal.CommandServices;
+using LivvaPlatform.API.SubscriptionManagement.Application.Internal.OutboundServices;
+using LivvaPlatform.API.SubscriptionManagement.Application.Internal.QueryServices;
+using LivvaPlatform.API.SubscriptionManagement.Application.Services;
+using LivvaPlatform.API.SubscriptionManagement.Domain.Repositories;
+using LivvaPlatform.API.SubscriptionManagement.Infrastructure.Payments.MercadoPago;
+using LivvaPlatform.API.SubscriptionManagement.Infrastructure.Payments.MercadoPago.Services;
+using LivvaPlatform.API.SubscriptionManagement.Infrastructure.Persistence.EFC.Repositories;
 using LivvaPlatform.API.Resources;
 using LivvaPlatform.API.Shared.Domain.Repositories;
 using LivvaPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
@@ -188,6 +196,27 @@ builder.Services.AddScoped<IRenewalRepository, RenewalRepository>();
 builder.Services.AddScoped<IPolicyCommandService, PolicyCommandService>();
 builder.Services.AddScoped<IPolicyQueryService, PolicyQueryService>();
 builder.Services.AddScoped<IPolicyManagementContextFacade, PolicyManagementContextFacade>();
+
+// Subscription Management Bounded Context Injection Configuration
+builder.Services.AddScoped<ISubscriptionPlanRepository, SubscriptionPlanRepository>();
+builder.Services.AddScoped<IUserSubscriptionRepository, UserSubscriptionRepository>();
+builder.Services.AddScoped<ISubscriptionPaymentRepository, SubscriptionPaymentRepository>();
+builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandService>();
+builder.Services.AddScoped<ISubscriptionQueryService, SubscriptionQueryService>();
+
+// Mercado Pago: the access token comes from MERCADO_PAGO_ACCESS_TOKEN or MercadoPago:AccessToken (user secrets).
+builder.Services.Configure<MercadoPagoSettings>(builder.Configuration.GetSection(MercadoPagoSettings.SectionName));
+builder.Services.PostConfigure<MercadoPagoSettings>(settings =>
+{
+    if (string.IsNullOrWhiteSpace(settings.AccessToken))
+        settings.AccessToken = builder.Configuration["MERCADO_PAGO_ACCESS_TOKEN"] ?? string.Empty;
+});
+builder.Services.AddHttpClient<IPaymentProviderService, MercadoPagoPaymentService>((serviceProvider, client) =>
+{
+    var baseUrl = builder.Configuration[$"{MercadoPagoSettings.SectionName}:BaseUrl"] ?? "https://api.mercadopago.com/";
+    client.BaseAddress = new Uri(baseUrl);
+    client.Timeout = TimeSpan.FromSeconds(30);
+});
 
 var app = builder.Build();
 

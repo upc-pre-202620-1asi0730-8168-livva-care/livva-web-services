@@ -206,4 +206,16 @@
     <data name="PaymentProviderUnavailable" xml:space="preserve">
         <value>Mercado Pago could not be reached.</value>
     </data>
+    <data name="NotificationNotFound" xml:space="preserve">
+        <value>The notification was not found.</value>
+    </data>
+    <data name="NotificationAlreadyExists" xml:space="preserve">
+        <value>The user already has a notification of this type for the policy.</value>
+    </data>
+    <data name="InvalidNotificationUpdate" xml:space="preserve">
+        <value>Only marking the notification as read (isRead = true) is supported.</value>
+    </data>
+    <data name="RequiredNotificationType" xml:space="preserve">
+        <value>The notification type is required.</value>
+    </data>
 </root>

@@ -1,5 +1,6 @@
 using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using LivvaPlatform.API.NotificationManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.PolicyManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.SubscriptionManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
@@ -37,6 +38,9 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
 
         // Subscription Management Bounded Context
         builder.ApplySubscriptionManagementConfiguration();
+
+        // Notification Management Bounded Context
+        builder.ApplyNotificationManagementConfiguration();
 
         builder.UseSnakeCaseNamingConvention();
     }

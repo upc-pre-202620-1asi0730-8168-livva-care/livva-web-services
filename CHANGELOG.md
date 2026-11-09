@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Beneficiaries are now validated against existing policies through the Policy Management anti-corruption layer facade.
 - Subscription Management bounded context: subscription plans (with the plans of the Web Application), user subscriptions and subscription payments under `/api/v1/subscription-plans`, `/api/v1/user-subscriptions` and `/api/v1/subscription-payments`.
 - `POST /api/v1/payment-orders`, which creates orders in the Mercado Pago Orders API keeping the access token on the server.
+- Notification Management bounded context: notifications under `/api/v1/notifications` (filter by user, create policy expiration notices without duplicates, and mark as read with PATCH).
 
 ## [0.1.0] - 2026-11-08
 

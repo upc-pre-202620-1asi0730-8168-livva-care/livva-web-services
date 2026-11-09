@@ -206,4 +206,16 @@
     <data name="PaymentProviderUnavailable" xml:space="preserve">
         <value>No se pudo contactar con Mercado Pago.</value>
     </data>
+    <data name="NotificationNotFound" xml:space="preserve">
+        <value>No se encontró la notificación.</value>
+    </data>
+    <data name="NotificationAlreadyExists" xml:space="preserve">
+        <value>El usuario ya tiene una notificación de este tipo para la póliza.</value>
+    </data>
+    <data name="InvalidNotificationUpdate" xml:space="preserve">
+        <value>Solo se admite marcar la notificación como leída (isRead = true).</value>
+    </data>
+    <data name="RequiredNotificationType" xml:space="preserve">
+        <value>El tipo de notificación es obligatorio.</value>
+    </data>
 </root>

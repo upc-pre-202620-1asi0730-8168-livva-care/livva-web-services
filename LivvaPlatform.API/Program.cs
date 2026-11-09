@@ -16,6 +16,11 @@ using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Internal.Qu
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Services;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Repositories;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Infrastructure.Persistence.EFC.Repositories;
+using LivvaPlatform.API.NotificationManagement.Application.Internal.CommandServices;
+using LivvaPlatform.API.NotificationManagement.Application.Internal.QueryServices;
+using LivvaPlatform.API.NotificationManagement.Application.Services;
+using LivvaPlatform.API.NotificationManagement.Domain.Repositories;
+using LivvaPlatform.API.NotificationManagement.Infrastructure.Persistence.EFC.Repositories;
 using LivvaPlatform.API.PolicyManagement.Application.ACL;
 using LivvaPlatform.API.PolicyManagement.Application.Internal.CommandServices;
 using LivvaPlatform.API.PolicyManagement.Application.Internal.QueryServices;
@@ -203,6 +208,11 @@ builder.Services.AddScoped<IUserSubscriptionRepository, UserSubscriptionReposito
 builder.Services.AddScoped<ISubscriptionPaymentRepository, SubscriptionPaymentRepository>();
 builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandService>();
 builder.Services.AddScoped<ISubscriptionQueryService, SubscriptionQueryService>();
+
+// Notification Management Bounded Context Injection Configuration
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<INotificationCommandService, NotificationCommandService>();
+builder.Services.AddScoped<INotificationQueryService, NotificationQueryService>();
 
 // Mercado Pago: the access token comes from MERCADO_PAGO_ACCESS_TOKEN or MercadoPago:AccessToken (user secrets).
 builder.Services.Configure<MercadoPagoSettings>(builder.Configuration.GetSection(MercadoPagoSettings.SectionName));

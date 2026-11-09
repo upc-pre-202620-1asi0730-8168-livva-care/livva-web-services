@@ -559,6 +559,63 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                     b.ToTable("vehicle_insurance_applications");
                 });
 
+            modelBuilder.Entity("LivvaPlatform.API.NotificationManagement.Domain.Model.Aggregates.Notification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("date")
+                        .HasColumnName("expiration_date");
+
+                    b.Property<bool>("IsRead")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_read");
+
+                    b.Property<long?>("PolicyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("policy_id");
+
+                    b.Property<string>("PolicyNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("policy_number");
+
+                    b.Property<DateTimeOffset?>("ReadAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("read_at");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("type");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_notifications");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("i_x_notifications_user_id");
+
+                    b.ToTable("notifications");
+                });
+
             modelBuilder.Entity("LivvaPlatform.API.PolicyManagement.Domain.Model.Aggregates.Policy", b =>
                 {
                     b.Property<long>("Id")

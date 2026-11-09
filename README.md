@@ -35,6 +35,7 @@ livva-web-services/
 ├── LivvaPlatform.API/                  # Web API project
 │   ├── IdentityAndProfileManagement/   # Users, profiles and authentication
 │   ├── InsuranceOfferingAndApplications/ # Insurers, products, vehicles, applications, beneficiaries
+│   ├── NotificationManagement/         # Notifications
 │   ├── PolicyManagement/               # Policies, coverages, documents, renewals
 │   ├── SubscriptionManagement/         # Plans, user subscriptions, payments, Mercado Pago orders
 │   ├── Resources/                      # Localization (.resx)

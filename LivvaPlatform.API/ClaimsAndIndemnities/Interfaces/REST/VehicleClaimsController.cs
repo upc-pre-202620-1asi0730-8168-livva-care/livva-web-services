@@ -2,7 +2,6 @@
 using LivvaPlatform.API.ClaimsAndIndemnities.Application.Errors;
 using LivvaPlatform.API.ClaimsAndIndemnities.Application.Services;
 using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates;
-using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Commands;
 using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Queries;
 using LivvaPlatform.API.ClaimsAndIndemnities.Interfaces.REST.Resources;
 using LivvaPlatform.API.ClaimsAndIndemnities.Interfaces.REST.Transform;
@@ -21,6 +20,7 @@ public class VehicleClaimsController(
     IVehicleClaimCommandService commandService,
     IVehicleClaimQueryService queryService) : ControllerBase
 {
+    // POST: api/v1/vehicle-claims
     [HttpPost]
     [ProducesResponseType(typeof(VehicleClaimResource), StatusCodes.Status201Created)]
     public async Task<ActionResult> Create(
@@ -28,6 +28,7 @@ public class VehicleClaimsController(
         CancellationToken cancellationToken)
     {
         var command = VehicleClaimAssembler.ToCommand(resource);
+
         var result = await commandService.Handle(command, cancellationToken);
 
         return result switch
@@ -45,8 +46,10 @@ public class VehicleClaimsController(
         };
     }
 
+    // GET: api/v1/vehicle-claims/{claimId}
     [HttpGet("{claimId:long}")]
     [ProducesResponseType(typeof(VehicleClaimResource), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetById(
         long claimId,
         CancellationToken cancellationToken)
@@ -55,18 +58,13 @@ public class VehicleClaimsController(
             new GetVehicleClaimByIdQuery(claimId),
             cancellationToken);
 
-        return result switch
-        {
-            Result<VehicleClaim, VehicleClaimError>.Success success =>
-                Ok(VehicleClaimAssembler.ToResource(success.Value)),
+        if (result is null)
+            return NotFound();
 
-            Result<VehicleClaim, VehicleClaimError>.Failure failure =>
-                MapError(failure.Error),
-
-            _ => Problem(statusCode: StatusCodes.Status500InternalServerError)
-        };
+        return Ok(VehicleClaimAssembler.ToResource(result));
     }
 
+    // GET: api/v1/vehicle-claims/user/{userId}
     [HttpGet("user/{userId:long}")]
     [ProducesResponseType(typeof(IEnumerable<VehicleClaimResource>), StatusCodes.Status200OK)]
     public async Task<ActionResult> GetByUser(
@@ -77,18 +75,10 @@ public class VehicleClaimsController(
             new GetVehicleClaimsByUserIdQuery(userId),
             cancellationToken);
 
-        return result switch
-        {
-            Result<IEnumerable<VehicleClaim>, VehicleClaimError>.Success success =>
-                Ok(success.Value.Select(VehicleClaimAssembler.ToResource)),
-
-            Result<IEnumerable<VehicleClaim>, VehicleClaimError>.Failure failure =>
-                MapError(failure.Error),
-
-            _ => Problem(statusCode: StatusCodes.Status500InternalServerError)
-        };
+        return Ok(result.Select(VehicleClaimAssembler.ToResource));
     }
 
+    // GET: api/v1/vehicle-claims/policy/{policyId}
     [HttpGet("policy/{policyId:long}")]
     [ProducesResponseType(typeof(IEnumerable<VehicleClaimResource>), StatusCodes.Status200OK)]
     public async Task<ActionResult> GetByPolicy(
@@ -99,18 +89,10 @@ public class VehicleClaimsController(
             new GetVehicleClaimsByPolicyIdQuery(policyId),
             cancellationToken);
 
-        return result switch
-        {
-            Result<IEnumerable<VehicleClaim>, VehicleClaimError>.Success success =>
-                Ok(success.Value.Select(VehicleClaimAssembler.ToResource)),
-
-            Result<IEnumerable<VehicleClaim>, VehicleClaimError>.Failure failure =>
-                MapError(failure.Error),
-
-            _ => Problem(statusCode: StatusCodes.Status500InternalServerError)
-        };
+        return Ok(result.Select(VehicleClaimAssembler.ToResource));
     }
 
+    // PATCH: api/v1/vehicle-claims/{claimId}/status
     [HttpPatch("{claimId:long}/status")]
     [ProducesResponseType(typeof(VehicleClaimResource), StatusCodes.Status200OK)]
     public async Task<ActionResult> ChangeStatus(
@@ -119,6 +101,7 @@ public class VehicleClaimsController(
         CancellationToken cancellationToken)
     {
         var command = VehicleClaimAssembler.ToCommand(claimId, resource);
+
         var result = await commandService.Handle(command, cancellationToken);
 
         return result switch
@@ -133,15 +116,26 @@ public class VehicleClaimsController(
         };
     }
 
+    // Maps domain errors to HTTP responses.
     private ActionResult MapError(VehicleClaimError error)
     {
         var statusCode = error switch
         {
-            VehicleClaimError.UserNotFound => StatusCodes.Status404NotFound,
-            VehicleClaimError.PolicyNotFound => StatusCodes.Status404NotFound,
-            VehicleClaimError.VehicleClaimNotFound => StatusCodes.Status404NotFound,
-            VehicleClaimError.InvalidStatusChange => StatusCodes.Status409Conflict,
-            VehicleClaimError.InvalidData => StatusCodes.Status400BadRequest,
+            VehicleClaimError.UserNotFound =>
+                StatusCodes.Status404NotFound,
+
+            VehicleClaimError.PolicyNotFound =>
+                StatusCodes.Status404NotFound,
+
+            VehicleClaimError.VehicleClaimNotFound =>
+                StatusCodes.Status404NotFound,
+
+            VehicleClaimError.InvalidStatusChange =>
+                StatusCodes.Status409Conflict,
+
+            VehicleClaimError.InvalidData =>
+                StatusCodes.Status400BadRequest,
+
             _ => StatusCodes.Status500InternalServerError
         };
 

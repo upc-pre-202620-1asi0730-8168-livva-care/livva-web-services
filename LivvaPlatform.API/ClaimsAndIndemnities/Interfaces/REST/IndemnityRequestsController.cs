@@ -20,6 +20,7 @@ public class IndemnityRequestsController(
     IIndemnityRequestCommandService commandService,
     IIndemnityRequestQueryService queryService) : ControllerBase
 {
+    // POST: api/v1/indemnity-requests
     [HttpPost]
     [ProducesResponseType(typeof(IndemnityRequestResource), StatusCodes.Status201Created)]
     public async Task<ActionResult> Create(
@@ -27,6 +28,7 @@ public class IndemnityRequestsController(
         CancellationToken cancellationToken)
     {
         var command = IndemnityRequestAssembler.ToCommand(resource);
+
         var result = await commandService.Handle(command, cancellationToken);
 
         return result switch
@@ -44,8 +46,10 @@ public class IndemnityRequestsController(
         };
     }
 
+    // GET: api/v1/indemnity-requests/{requestId}
     [HttpGet("{requestId:long}")]
     [ProducesResponseType(typeof(IndemnityRequestResource), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetById(
         long requestId,
         CancellationToken cancellationToken)
@@ -54,18 +58,13 @@ public class IndemnityRequestsController(
             new GetIndemnityRequestByIdQuery(requestId),
             cancellationToken);
 
-        return result switch
-        {
-            Result<IndemnityRequest, IndemnityRequestError>.Success success =>
-                Ok(IndemnityRequestAssembler.ToResource(success.Value)),
+        if (result is null)
+            return NotFound();
 
-            Result<IndemnityRequest, IndemnityRequestError>.Failure failure =>
-                MapError(failure.Error),
-
-            _ => Problem(statusCode: StatusCodes.Status500InternalServerError)
-        };
+        return Ok(IndemnityRequestAssembler.ToResource(result));
     }
 
+    // GET: api/v1/indemnity-requests/beneficiary/{beneficiaryId}
     [HttpGet("beneficiary/{beneficiaryId:long}")]
     [ProducesResponseType(typeof(IEnumerable<IndemnityRequestResource>), StatusCodes.Status200OK)]
     public async Task<ActionResult> GetByBeneficiary(
@@ -76,18 +75,11 @@ public class IndemnityRequestsController(
             new GetIndemnityRequestsByBeneficiaryIdQuery(beneficiaryId),
             cancellationToken);
 
-        return result switch
-        {
-            Result<IEnumerable<IndemnityRequest>, IndemnityRequestError>.Success success =>
-                Ok(success.Value.Select(IndemnityRequestAssembler.ToResource)),
-
-            Result<IEnumerable<IndemnityRequest>, IndemnityRequestError>.Failure failure =>
-                MapError(failure.Error),
-
-            _ => Problem(statusCode: StatusCodes.Status500InternalServerError)
-        };
+        return Ok(
+            result.Select(IndemnityRequestAssembler.ToResource));
     }
 
+    // GET: api/v1/indemnity-requests/policy/{policyId}
     [HttpGet("policy/{policyId:long}")]
     [ProducesResponseType(typeof(IEnumerable<IndemnityRequestResource>), StatusCodes.Status200OK)]
     public async Task<ActionResult> GetByPolicy(
@@ -98,18 +90,11 @@ public class IndemnityRequestsController(
             new GetIndemnityRequestsByPolicyIdQuery(policyId),
             cancellationToken);
 
-        return result switch
-        {
-            Result<IEnumerable<IndemnityRequest>, IndemnityRequestError>.Success success =>
-                Ok(success.Value.Select(IndemnityRequestAssembler.ToResource)),
-
-            Result<IEnumerable<IndemnityRequest>, IndemnityRequestError>.Failure failure =>
-                MapError(failure.Error),
-
-            _ => Problem(statusCode: StatusCodes.Status500InternalServerError)
-        };
+        return Ok(
+            result.Select(IndemnityRequestAssembler.ToResource));
     }
 
+    // PATCH: api/v1/indemnity-requests/{requestId}/status
     [HttpPatch("{requestId:long}/status")]
     [ProducesResponseType(typeof(IndemnityRequestResource), StatusCodes.Status200OK)]
     public async Task<ActionResult> ChangeStatus(
@@ -118,6 +103,7 @@ public class IndemnityRequestsController(
         CancellationToken cancellationToken)
     {
         var command = IndemnityRequestAssembler.ToCommand(requestId, resource);
+
         var result = await commandService.Handle(command, cancellationToken);
 
         return result switch
@@ -132,6 +118,7 @@ public class IndemnityRequestsController(
         };
     }
 
+    // Maps domain errors to HTTP responses.
     private ActionResult MapError(IndemnityRequestError error)
     {
         var statusCode = error switch
@@ -159,3 +146,4 @@ public class IndemnityRequestsController(
             statusCode: statusCode);
     }
 }
+

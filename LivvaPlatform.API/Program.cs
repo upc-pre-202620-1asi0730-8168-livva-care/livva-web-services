@@ -1,3 +1,4 @@
+
 using System.Text;
 using System.Text.Json.Serialization;
 using LivvaPlatform.API.IdentityAndProfileManagement.Application.ACL;
@@ -11,16 +12,13 @@ using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Persistence.
 using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Tokens.JWT.Configuration;
 using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Tokens.JWT.Services;
 using LivvaPlatform.API.IdentityAndProfileManagement.Interfaces.ACL;
+
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Internal.CommandServices;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Internal.QueryServices;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Application.Services;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Domain.Repositories;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Infrastructure.Persistence.EFC.Repositories;
-using LivvaPlatform.API.NotificationManagement.Application.Internal.CommandServices;
-using LivvaPlatform.API.NotificationManagement.Application.Internal.QueryServices;
-using LivvaPlatform.API.NotificationManagement.Application.Services;
-using LivvaPlatform.API.NotificationManagement.Domain.Repositories;
-using LivvaPlatform.API.NotificationManagement.Infrastructure.Persistence.EFC.Repositories;
+
 using LivvaPlatform.API.PolicyManagement.Application.ACL;
 using LivvaPlatform.API.PolicyManagement.Application.Internal.CommandServices;
 using LivvaPlatform.API.PolicyManagement.Application.Internal.QueryServices;
@@ -28,6 +26,7 @@ using LivvaPlatform.API.PolicyManagement.Application.Services;
 using LivvaPlatform.API.PolicyManagement.Domain.Repositories;
 using LivvaPlatform.API.PolicyManagement.Infrastructure.Persistence.EFC.Repositories;
 using LivvaPlatform.API.PolicyManagement.Interfaces.ACL;
+
 using LivvaPlatform.API.SubscriptionManagement.Application.Internal.CommandServices;
 using LivvaPlatform.API.SubscriptionManagement.Application.Internal.OutboundServices;
 using LivvaPlatform.API.SubscriptionManagement.Application.Internal.QueryServices;
@@ -36,6 +35,19 @@ using LivvaPlatform.API.SubscriptionManagement.Domain.Repositories;
 using LivvaPlatform.API.SubscriptionManagement.Infrastructure.Payments.MercadoPago;
 using LivvaPlatform.API.SubscriptionManagement.Infrastructure.Payments.MercadoPago.Services;
 using LivvaPlatform.API.SubscriptionManagement.Infrastructure.Persistence.EFC.Repositories;
+
+using LivvaPlatform.API.NotificationManagement.Application.Internal.CommandServices;
+using LivvaPlatform.API.NotificationManagement.Application.Internal.QueryServices;
+using LivvaPlatform.API.NotificationManagement.Application.Services;
+using LivvaPlatform.API.NotificationManagement.Domain.Repositories;
+using LivvaPlatform.API.NotificationManagement.Infrastructure.Persistence.EFC.Repositories;
+
+using LivvaPlatform.API.ClaimsAndIndemnities.Application.Internal.CommandServices;
+using LivvaPlatform.API.ClaimsAndIndemnities.Application.Internal.QueryServices;
+using LivvaPlatform.API.ClaimsAndIndemnities.Application.Services;
+using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Repositories;
+using LivvaPlatform.API.ClaimsAndIndemnities.Infrastructure.Persistence.EFC.Repositories;
+
 using LivvaPlatform.API.Resources;
 using LivvaPlatform.API.Shared.Domain.Repositories;
 using LivvaPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
@@ -213,6 +225,16 @@ builder.Services.AddScoped<ISubscriptionQueryService, SubscriptionQueryService>(
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<INotificationCommandService, NotificationCommandService>();
 builder.Services.AddScoped<INotificationQueryService, NotificationQueryService>();
+
+// Claims and Indemnities Bounded Context Injection Configuration
+builder.Services.AddScoped<IVehicleClaimRepository, VehicleClaimRepository>();
+builder.Services.AddScoped<IIndemnityRequestRepository, IndemnityRequestRepository>();
+
+builder.Services.AddScoped<IVehicleClaimCommandService, VehicleClaimCommandService>();
+builder.Services.AddScoped<IVehicleClaimQueryService, VehicleClaimQueryService>();
+
+builder.Services.AddScoped<IIndemnityRequestCommandService, IndemnityRequestCommandService>();
+builder.Services.AddScoped<IIndemnityRequestQueryService, IndemnityRequestQueryService>();
 
 // Mercado Pago: the access token comes from MERCADO_PAGO_ACCESS_TOKEN or MercadoPago:AccessToken (user secrets).
 builder.Services.Configure<MercadoPagoSettings>(builder.Configuration.GetSection(MercadoPagoSettings.SectionName));

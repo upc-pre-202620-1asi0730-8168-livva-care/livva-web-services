@@ -19,6 +19,208 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                 .HasAnnotation("ProductVersion", "10.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.ClaimStatusHistory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset>("ChangedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("changed_at");
+
+                    b.Property<long>("ClaimId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("claim_id");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("comment");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_claim_status_histories");
+
+                    b.HasIndex("ClaimId")
+                        .HasDatabaseName("i_x_claim_status_histories_claim_id");
+
+                    b.ToTable("claim_status_histories");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.IndemnityRequest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<long>("BeneficiaryId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("beneficiary_id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)")
+                        .HasColumnName("description");
+
+                    b.Property<decimal?>("IndemnityAmount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("indemnity_amount");
+
+                    b.Property<long>("PolicyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("policy_id");
+
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("date")
+                        .HasColumnName("request_date");
+
+                    b.Property<DateTimeOffset?>("ResolvedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("resolved_at");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_indemnity_requests");
+
+                    b.HasIndex("BeneficiaryId")
+                        .HasDatabaseName("i_x_indemnity_requests_beneficiary_id");
+
+                    b.HasIndex("PolicyId")
+                        .HasDatabaseName("i_x_indemnity_requests_policy_id");
+
+                    b.ToTable("indemnity_requests");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.IndemnityStatusHistory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset>("ChangedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("changed_at");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("comment");
+
+                    b.Property<long>("IndemnityRequestId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("indemnity_request_id");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_indemnity_status_histories");
+
+                    b.HasIndex("IndemnityRequestId")
+                        .HasDatabaseName("i_x_indemnity_status_histories_indemnity_request_id");
+
+                    b.ToTable("indemnity_status_histories");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.VehicleClaim", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<string>("ClaimNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("claim_number");
+
+                    b.Property<decimal?>("CompensationAmount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("compensation_amount");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)")
+                        .HasColumnName("description");
+
+                    b.Property<DateTime>("IncidentDate")
+                        .HasColumnType("date")
+                        .HasColumnName("incident_date");
+
+                    b.Property<long>("PolicyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("policy_id");
+
+                    b.Property<DateTimeOffset?>("ResolvedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("resolved_at");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_vehicle_claims");
+
+                    b.HasIndex("ClaimNumber")
+                        .IsUnique()
+                        .HasDatabaseName("i_x_vehicle_claims_claim_number");
+
+                    b.HasIndex("PolicyId")
+                        .HasDatabaseName("i_x_vehicle_claims_policy_id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("i_x_vehicle_claims_user_id");
+
+                    b.ToTable("vehicle_claims");
+                });
+
             modelBuilder.Entity("LivvaPlatform.API.IdentityAndProfileManagement.Domain.Model.Aggregates.User", b =>
                 {
                     b.Property<long>("Id")
@@ -1131,6 +1333,26 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                     b.ToTable("user_subscriptions");
                 });
 
+            modelBuilder.Entity("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.ClaimStatusHistory", b =>
+                {
+                    b.HasOne("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.VehicleClaim", null)
+                        .WithMany("StatusHistories")
+                        .HasForeignKey("ClaimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_claim_status_histories_vehicle_claim");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.IndemnityStatusHistory", b =>
+                {
+                    b.HasOne("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.IndemnityRequest", null)
+                        .WithMany("StatusHistories")
+                        .HasForeignKey("IndemnityRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_indemnity_status_histories_request");
+                });
+
             modelBuilder.Entity("LivvaPlatform.API.IdentityAndProfileManagement.Domain.Model.Aggregates.UserProfile", b =>
                 {
                     b.HasOne("LivvaPlatform.API.IdentityAndProfileManagement.Domain.Model.Aggregates.User", null)
@@ -1236,6 +1458,16 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_user_subscriptions_plan");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.IndemnityRequest", b =>
+                {
+                    b.Navigation("StatusHistories");
+                });
+
+            modelBuilder.Entity("LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates.VehicleClaim", b =>
+                {
+                    b.Navigation("StatusHistories");
                 });
 #pragma warning restore 612, 618
         }

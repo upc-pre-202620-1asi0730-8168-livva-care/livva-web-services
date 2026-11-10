@@ -1,6 +1,7 @@
 
 using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LivvaPlatform.API.ClaimsAndIndemnities.Infrastructure.Persistence.EFC.Configuration.Extensions;
 
@@ -9,6 +10,10 @@ namespace LivvaPlatform.API.ClaimsAndIndemnities.Infrastructure.Persistence.EFC.
 /// </summary>
 public static class ModelBuilderExtensions
 {
+    private static readonly ValueConverter<DateOnly, DateTime> DateConverter =
+        new(date => date.ToDateTime(TimeOnly.MinValue),
+            value => DateOnly.FromDateTime(value));
+
     /// <summary>
     ///     Applies the mapping of vehicle claims, indemnity requests and their status histories.
     /// </summary>
@@ -33,7 +38,7 @@ public static class ModelBuilderExtensions
 
             claim.Property(c => c.IncidentDate)
                 .IsRequired()
-                .HasConversion<DateTime>()
+                .HasConversion(DateConverter)
                 .HasColumnType("date");
 
             claim.Property(c => c.Description)
@@ -91,7 +96,7 @@ public static class ModelBuilderExtensions
 
             request.Property(r => r.RequestDate)
                 .IsRequired()
-                .HasConversion<DateTime>()
+                .HasConversion(DateConverter)
                 .HasColumnType("date");
 
             request.Property(r => r.Description)

@@ -1,8 +1,10 @@
+
 using LivvaPlatform.API.IdentityAndProfileManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.InsuranceOfferingAndApplications.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.NotificationManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.PolicyManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.SubscriptionManagement.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using LivvaPlatform.API.ClaimsAndIndemnities.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -10,14 +12,14 @@ using Microsoft.EntityFrameworkCore;
 namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 
 /// <summary>
-///     Application database context
+///     Application database context.
 /// </summary>
 public class AppDbContext(DbContextOptions options) : DbContext(options)
 {
     /// <inheritdoc />
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        // Apply audit timestamp interceptor for all IAuditableEntity implementations
+        // Apply audit timestamp interceptor for all IAuditableEntity implementations.
         builder.AddInterceptors(new AuditableEntityInterceptor());
         base.OnConfiguring(builder);
     }
@@ -27,20 +29,23 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     {
         base.OnModelCreating(builder);
 
-        // Identity and Profile Management Bounded Context
+        // Identity and Profile Management Bounded Context.
         builder.ApplyIdentityAndProfileManagementConfiguration();
 
-        // Insurance Offering and Applications Bounded Context
+        // Insurance Offering and Applications Bounded Context.
         builder.ApplyInsuranceOfferingAndApplicationsConfiguration();
 
-        // Policy Management Bounded Context
+        // Policy Management Bounded Context.
         builder.ApplyPolicyManagementConfiguration();
 
-        // Subscription Management Bounded Context
+        // Subscription Management Bounded Context.
         builder.ApplySubscriptionManagementConfiguration();
 
-        // Notification Management Bounded Context
+        // Notification Management Bounded Context.
         builder.ApplyNotificationManagementConfiguration();
+
+        // Claims and Indemnities Bounded Context.
+        builder.ApplyClaimsAndIndemnitiesConfiguration();
 
         builder.UseSnakeCaseNamingConvention();
     }

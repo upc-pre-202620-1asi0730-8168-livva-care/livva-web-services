@@ -64,38 +64,28 @@ public class IndemnityRequestsController(
         return Ok(IndemnityRequestAssembler.ToResource(result));
     }
 
-    // GET: api/v1/indemnity-requests/beneficiary/{beneficiaryId}
-    [HttpGet("beneficiary/{beneficiaryId:long}")]
+    /// <summary>Gets indemnity requests filtered by <c>policyId</c> or <c>beneficiaryId</c>.</summary>
+    /// <param name="policyId">Optional policy identifier.</param>
+    /// <param name="beneficiaryId">Optional beneficiary identifier.</param>
+    /// <param name="cancellationToken">Token to cancel the asynchronous operation.</param>
+    /// <response code="200">The indemnity requests (empty if none match or no filter is given).</response>
+    [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<IndemnityRequestResource>), StatusCodes.Status200OK)]
-    public async Task<ActionResult> GetByBeneficiary(
-        long beneficiaryId,
+    public async Task<ActionResult> GetIndemnityRequests([FromQuery] long? policyId, [FromQuery] long? beneficiaryId,
         CancellationToken cancellationToken)
     {
-        var result = await queryService.Handle(
-            new GetIndemnityRequestsByBeneficiaryIdQuery(beneficiaryId),
-            cancellationToken);
+        IEnumerable<IndemnityRequest> result = policyId is not null
+            ? await queryService.Handle(new GetIndemnityRequestsByPolicyIdQuery(policyId.Value), cancellationToken)
+            : beneficiaryId is not null
+                ? await queryService.Handle(new GetIndemnityRequestsByBeneficiaryIdQuery(beneficiaryId.Value),
+                    cancellationToken)
+                : [];
 
-        return Ok(
-            result.Select(IndemnityRequestAssembler.ToResource));
+        return Ok(result.Select(IndemnityRequestAssembler.ToResource));
     }
 
-    // GET: api/v1/indemnity-requests/policy/{policyId}
-    [HttpGet("policy/{policyId:long}")]
-    [ProducesResponseType(typeof(IEnumerable<IndemnityRequestResource>), StatusCodes.Status200OK)]
-    public async Task<ActionResult> GetByPolicy(
-        long policyId,
-        CancellationToken cancellationToken)
-    {
-        var result = await queryService.Handle(
-            new GetIndemnityRequestsByPolicyIdQuery(policyId),
-            cancellationToken);
-
-        return Ok(
-            result.Select(IndemnityRequestAssembler.ToResource));
-    }
-
-    // PATCH: api/v1/indemnity-requests/{requestId}/status
-    [HttpPatch("{requestId:long}/status")]
+    // PATCH: api/v1/indemnity-requests/{requestId}
+    [HttpPatch("{requestId:long}")]
     [ProducesResponseType(typeof(IndemnityRequestResource), StatusCodes.Status200OK)]
     public async Task<ActionResult> ChangeStatus(
         long requestId,

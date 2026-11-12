@@ -20,8 +20,8 @@ public class VehicleClaimQueryServiceTests
         new(new CreateVehicleClaimCommand(
             1,
             10,
-            "CLAIM-QUERY-001",
             DateOnly.FromDateTime(DateTime.Today.AddDays(-1)),
+            "Av. Arequipa, Lima",
             "Accidente de prueba",
             1000m));
 
@@ -58,7 +58,7 @@ public class VehicleClaimQueryServiceTests
     {
         var claims = new[] { CreateClaim() };
 
-        _repository.Setup(x => x.FindByUserIdAsync(10))
+        _repository.Setup(x => x.FindByUserIdAsync(10, It.IsAny<CancellationToken>()))
             .ReturnsAsync(claims);
 
         var result = await CreateService().Handle(
@@ -72,7 +72,7 @@ public class VehicleClaimQueryServiceTests
     {
         var claims = new[] { CreateClaim() };
 
-        _repository.Setup(x => x.FindByPolicyIdAsync(1))
+        _repository.Setup(x => x.FindByPolicyIdAsync(1, It.IsAny<CancellationToken>()))
             .ReturnsAsync(claims);
 
         var result = await CreateService().Handle(

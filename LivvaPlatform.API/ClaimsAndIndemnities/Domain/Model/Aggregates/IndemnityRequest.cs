@@ -55,6 +55,7 @@ public partial class IndemnityRequest
         Description = command.Description.Trim();
         IndemnityAmount = command.IndemnityAmount;
         Status = IndemnityRequestStatus.SUBMITTED;
+        SubmittedAt = DateTimeOffset.UtcNow;
 
         StatusHistories = new List<IndemnityStatusHistory>
         {
@@ -84,6 +85,9 @@ public partial class IndemnityRequest
     public decimal? IndemnityAmount { get; private set; }
 
     /// <summary>Gets the date when the indemnity request was resolved.</summary>
+    /// <summary>When the request was submitted.</summary>
+    public DateTimeOffset SubmittedAt { get; private set; }
+
     public DateTimeOffset? ResolvedAt { get; private set; }
 
     /// <summary>Gets the status history associated with this indemnity request.</summary>

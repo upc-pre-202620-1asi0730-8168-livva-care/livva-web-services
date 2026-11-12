@@ -1,19 +1,20 @@
-using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.ValueObjects;
-
 namespace LivvaPlatform.API.ClaimsAndIndemnities.Interfaces.REST.Resources;
 
 /// <summary>
-///     Resource representing a vehicle insurance claim.
+///     A vehicle claim returned by the API. The status is <c>reported</c>, <c>under_review</c>,
+///     <c>approved</c>, <c>rejected</c>, <c>resolved</c> or <c>cancelled</c>.
 /// </summary>
 public record VehicleClaimResource(
     long Id,
     long PolicyId,
     long UserId,
-    string ClaimNumber,
     DateOnly IncidentDate,
+    string IncidentLocation,
     string Description,
-    VehicleClaimStatus Status,
+    decimal EstimatedDamageAmount,
+    string Status,
     decimal? CompensationAmount,
+    DateTimeOffset ReportedAt,
     DateTimeOffset? ResolvedAt,
-    IEnumerable<ClaimStatusHistoryResource> StatusHistories);
-    
+    DateTimeOffset? CreatedAt,
+    DateTimeOffset? UpdatedAt);

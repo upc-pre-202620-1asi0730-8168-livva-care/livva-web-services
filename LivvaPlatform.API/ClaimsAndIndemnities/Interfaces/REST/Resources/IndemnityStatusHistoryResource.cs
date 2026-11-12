@@ -1,5 +1,3 @@
-using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.ValueObjects;
-
 namespace LivvaPlatform.API.ClaimsAndIndemnities.Interfaces.REST.Resources;
 
 /// <summary>
@@ -7,6 +5,6 @@ namespace LivvaPlatform.API.ClaimsAndIndemnities.Interfaces.REST.Resources;
 /// </summary>
 public record IndemnityStatusHistoryResource(
     long Id,
-    IndemnityRequestStatus Status,
+    string Status,
     string Comment,
     DateTimeOffset ChangedAt);

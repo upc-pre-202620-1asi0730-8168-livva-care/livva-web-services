@@ -7,21 +7,32 @@ using Microsoft.EntityFrameworkCore;
 namespace LivvaPlatform.API.ClaimsAndIndemnities.Infrastructure.Persistence.EFC.Repositories;
 
 /// <summary>
-///     Entity Framework repository for vehicle claim persistence.
+///     Entity Framework implementation of <see cref="IVehicleClaimRepository" />.
 /// </summary>
-/// <param name="context">The EF Core database context.</param>
 public class VehicleClaimRepository(AppDbContext context)
     : BaseRepository<VehicleClaim>(context), IVehicleClaimRepository
 {
     /// <inheritdoc />
-    public async Task<IEnumerable<VehicleClaim>> FindByUserIdAsync(long userId) =>
+    public async Task<IEnumerable<VehicleClaim>> FindByUserIdAsync(long userId,
+        CancellationToken cancellationToken = default) =>
         await Context.Set<VehicleClaim>()
             .Where(claim => claim.UserId == userId)
-            .ToListAsync();
+            .OrderByDescending(claim => claim.Id)
+            .ToListAsync(cancellationToken);
 
     /// <inheritdoc />
-    public async Task<IEnumerable<VehicleClaim>> FindByPolicyIdAsync(long policyId) =>
+    public async Task<IEnumerable<VehicleClaim>> FindByPolicyIdAsync(long policyId,
+        CancellationToken cancellationToken = default) =>
         await Context.Set<VehicleClaim>()
             .Where(claim => claim.PolicyId == policyId)
-            .ToListAsync();
+            .OrderByDescending(claim => claim.Id)
+            .ToListAsync(cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<ClaimStatusHistory>> FindStatusHistoriesByClaimIdAsync(long claimId,
+        CancellationToken cancellationToken = default) =>
+        await Context.Set<ClaimStatusHistory>()
+            .Where(history => history.ClaimId == claimId)
+            .OrderByDescending(history => history.Id)
+            .ToListAsync(cancellationToken);
 }

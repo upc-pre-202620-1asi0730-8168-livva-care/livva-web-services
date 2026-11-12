@@ -1,12 +1,12 @@
-using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.ValueObjects;
-
 namespace LivvaPlatform.API.ClaimsAndIndemnities.Interfaces.REST.Resources;
 
 /// <summary>
-///     Resource representing a vehicle claim status history entry.
+///     A status history entry of a vehicle claim.
 /// </summary>
 public record ClaimStatusHistoryResource(
     long Id,
-    VehicleClaimStatus Status,
+    long ClaimId,
+    string Status,
     string Comment,
-    DateTimeOffset ChangedAt);
+    DateTimeOffset ChangedAt,
+    DateTimeOffset CreatedAt);

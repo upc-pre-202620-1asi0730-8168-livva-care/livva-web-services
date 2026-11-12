@@ -28,11 +28,6 @@ public static class ModelBuilderExtensions
             claim.Property(c => c.UserId).IsRequired();
             claim.Property(c => c.PolicyId).IsRequired();
 
-            claim.Property(c => c.ClaimNumber)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            claim.HasIndex(c => c.ClaimNumber).IsUnique();
             claim.HasIndex(c => c.UserId);
             claim.HasIndex(c => c.PolicyId);
 
@@ -41,9 +36,21 @@ public static class ModelBuilderExtensions
                 .HasConversion(DateConverter)
                 .HasColumnType("date");
 
+            claim.Property(c => c.IncidentLocation)
+                .IsRequired()
+                .HasMaxLength(200);
+
             claim.Property(c => c.Description)
                 .IsRequired()
                 .HasMaxLength(1000);
+
+            claim.Property(c => c.EstimatedDamageAmount)
+                .IsRequired()
+                .HasPrecision(12, 2);
+
+            claim.Property(c => c.ReportedAt).IsRequired();
+
+            claim.Ignore(c => c.IsClosed);
 
             claim.Property(c => c.Status)
                 .IsRequired()
@@ -110,6 +117,8 @@ public static class ModelBuilderExtensions
 
             request.Property(r => r.IndemnityAmount)
                 .HasPrecision(12, 2);
+
+            request.Property(r => r.SubmittedAt).IsRequired();
 
             request.Property(r => r.ResolvedAt);
 

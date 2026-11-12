@@ -1,15 +1,14 @@
 using System.ComponentModel.DataAnnotations;
-using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.ValueObjects;
 
 namespace LivvaPlatform.API.ClaimsAndIndemnities.Interfaces.REST.Resources;
 
 /// <summary>
-///     Data required to change the status of a vehicle claim.
+///     Data to change the status of a vehicle claim (for example, <c>{"status": "cancelled"}</c>).
 /// </summary>
+/// <param name="Status">The new status in lowercase.</param>
+/// <param name="Comment">An optional comment about the change.</param>
 public record ChangeVehicleClaimStatusResource(
-    [EnumDataType(typeof(VehicleClaimStatus))]
-    VehicleClaimStatus Status,
-
-    [Required(ErrorMessage = "RequiredStatusComment")]
-    [StringLength(500, MinimumLength = 3, ErrorMessage = "InvalidStatusCommentLength")]
-    string Comment);
+    [Required(ErrorMessage = "RequiredStatus")]
+    string Status,
+    [StringLength(500, ErrorMessage = "InvalidStatusCommentLength")]
+    string? Comment);

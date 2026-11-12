@@ -1,3 +1,4 @@
+using LivvaPlatform.API.Shared.Domain.Model.ValueObjects;
 
 using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates;
 using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Commands;
@@ -44,8 +45,9 @@ public static class IndemnityRequestAssembler
             entity.BeneficiaryId,
             entity.RequestDate,
             entity.Description,
-            entity.Status,
+            EnumValueConverter.ToValue(entity.Status),
             entity.IndemnityAmount,
+            entity.SubmittedAt,
             entity.ResolvedAt,
             entity.StatusHistories.Select(ToResource));
 
@@ -56,7 +58,7 @@ public static class IndemnityRequestAssembler
         IndemnityStatusHistory entity) =>
         new(
             entity.Id,
-            entity.Status,
+            EnumValueConverter.ToValue(entity.Status),
             entity.Comment,
             entity.ChangedAt);
 }

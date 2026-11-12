@@ -6,27 +6,27 @@ using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Repositories;
 namespace LivvaPlatform.API.ClaimsAndIndemnities.Application.Internal.QueryServices;
 
 /// <summary>
-///     Application service for querying vehicle claims.
+///     Implementation of <see cref="IVehicleClaimQueryService" />.
 /// </summary>
-/// <param name="vehicleClaimRepository">Repository for accessing vehicle claims.</param>
-public class VehicleClaimQueryService(
-    IVehicleClaimRepository vehicleClaimRepository) : IVehicleClaimQueryService
+public class VehicleClaimQueryService(IVehicleClaimRepository vehicleClaimRepository) : IVehicleClaimQueryService
 {
     /// <inheritdoc />
-    public async Task<VehicleClaim?> Handle(
-        GetVehicleClaimByIdQuery query,
+    public async Task<VehicleClaim?> Handle(GetVehicleClaimByIdQuery query,
         CancellationToken cancellationToken = default) =>
         await vehicleClaimRepository.FindByIdAsync(query.ClaimId, cancellationToken);
 
     /// <inheritdoc />
-    public async Task<IEnumerable<VehicleClaim>> Handle(
-        GetVehicleClaimsByUserIdQuery query,
+    public async Task<IEnumerable<VehicleClaim>> Handle(GetVehicleClaimsByUserIdQuery query,
         CancellationToken cancellationToken = default) =>
-        await vehicleClaimRepository.FindByUserIdAsync(query.UserId);
+        await vehicleClaimRepository.FindByUserIdAsync(query.UserId, cancellationToken);
 
     /// <inheritdoc />
-    public async Task<IEnumerable<VehicleClaim>> Handle(
-        GetVehicleClaimsByPolicyIdQuery query,
+    public async Task<IEnumerable<VehicleClaim>> Handle(GetVehicleClaimsByPolicyIdQuery query,
         CancellationToken cancellationToken = default) =>
-        await vehicleClaimRepository.FindByPolicyIdAsync(query.PolicyId);
+        await vehicleClaimRepository.FindByPolicyIdAsync(query.PolicyId, cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<ClaimStatusHistory>> Handle(GetClaimStatusHistoriesByClaimIdQuery query,
+        CancellationToken cancellationToken = default) =>
+        await vehicleClaimRepository.FindStatusHistoriesByClaimIdAsync(query.ClaimId, cancellationToken);
 }

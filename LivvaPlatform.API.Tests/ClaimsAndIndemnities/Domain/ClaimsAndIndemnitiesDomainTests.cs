@@ -14,8 +14,8 @@ public class ClaimsAndIndemnitiesDomainTests
         new(
             1,
             10,
-            " claim-001 ",
             new DateOnly(2026, 1, 15),
+            " Av. Javier Prado, San Isidro ",
             "Vehicle accident on the main road.",
             5000);
 
@@ -32,13 +32,36 @@ public class ClaimsAndIndemnitiesDomainTests
     {
         var claim = new VehicleClaim(VehicleClaimCommand());
 
-        Assert.Equal("CLAIM-001", claim.ClaimNumber);
+        Assert.Equal("Av. Javier Prado, San Isidro", claim.IncidentLocation);
         Assert.Equal(VehicleClaimStatus.REPORTED, claim.Status);
         Assert.Single(claim.StatusHistories);
         Assert.Equal(
             VehicleClaimStatus.REPORTED,
             claim.StatusHistories.First().Status);
         Assert.Null(claim.ResolvedAt);
+    }
+
+    [Fact]
+    public void VehicleClaim_Cancel_ShouldCloseClaimAndRecordHistory()
+    {
+        var claim = new VehicleClaim(VehicleClaimCommand());
+
+        claim.ChangeStatus(VehicleClaimStatus.CANCELLED);
+
+        Assert.Equal(VehicleClaimStatus.CANCELLED, claim.Status);
+        Assert.True(claim.IsClosed);
+        Assert.NotNull(claim.ResolvedAt);
+        Assert.Equal(2, claim.StatusHistories.Count);
+        Assert.Throws<InvalidOperationException>(() => claim.ChangeStatus(VehicleClaimStatus.UNDER_REVIEW));
+    }
+
+    [Fact]
+    public void VehicleClaim_CancelAfterApproval_ShouldThrow()
+    {
+        var claim = new VehicleClaim(VehicleClaimCommand());
+        claim.ChangeStatus(VehicleClaimStatus.APPROVED, "Aprobado por la aseguradora.");
+
+        Assert.Throws<InvalidOperationException>(() => claim.ChangeStatus(VehicleClaimStatus.CANCELLED));
     }
 
     [Fact]

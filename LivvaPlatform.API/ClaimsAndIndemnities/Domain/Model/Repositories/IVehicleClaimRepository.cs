@@ -4,21 +4,17 @@ using LivvaPlatform.API.Shared.Domain.Repositories;
 namespace LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Repositories;
 
 /// <summary>
-///     Repository contract for vehicle claims.
+///     Repository of vehicle claims.
 /// </summary>
 public interface IVehicleClaimRepository : IBaseRepository<VehicleClaim>
 {
-    /// <summary>
-    ///     Gets vehicle claims associated with a user.
-    /// </summary>
-    /// <param name="userId">The user's identifier.</param>
-    /// <returns>The vehicle claims associated with the user.</returns>
-    Task<IEnumerable<VehicleClaim>> FindByUserIdAsync(long userId);
+    /// <summary>Finds the vehicle claims reported by a user, newest first.</summary>
+    Task<IEnumerable<VehicleClaim>> FindByUserIdAsync(long userId, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    ///     Gets vehicle claims associated with a policy.
-    /// </summary>
-    /// <param name="policyId">The policy's identifier.</param>
-    /// <returns>The vehicle claims associated with the policy.</returns>
-    Task<IEnumerable<VehicleClaim>> FindByPolicyIdAsync(long policyId);
+    /// <summary>Finds the vehicle claims of a policy, newest first.</summary>
+    Task<IEnumerable<VehicleClaim>> FindByPolicyIdAsync(long policyId, CancellationToken cancellationToken = default);
+
+    /// <summary>Finds the status history of a vehicle claim, newest first.</summary>
+    Task<IEnumerable<ClaimStatusHistory>> FindStatusHistoriesByClaimIdAsync(long claimId,
+        CancellationToken cancellationToken = default);
 }

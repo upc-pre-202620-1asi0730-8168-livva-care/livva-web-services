@@ -1,5 +1,3 @@
-using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.ValueObjects;
-
 namespace LivvaPlatform.API.ClaimsAndIndemnities.Interfaces.REST.Resources;
 
 /// <summary>
@@ -11,7 +9,8 @@ public record IndemnityRequestResource(
     long BeneficiaryId,
     DateOnly RequestDate,
     string Description,
-    IndemnityRequestStatus Status,
+    string Status,
     decimal? IndemnityAmount,
+    DateTimeOffset SubmittedAt,
     DateTimeOffset? ResolvedAt,
     IEnumerable<IndemnityStatusHistoryResource> StatusHistories);

@@ -99,6 +99,10 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                         .HasColumnType("varchar(30)")
                         .HasColumnName("status");
 
+                    b.Property<DateTimeOffset>("SubmittedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("submitted_at");
+
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetime")
                         .HasColumnName("updated_at");
@@ -158,12 +162,6 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    b.Property<string>("ClaimNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("claim_number");
-
                     b.Property<decimal?>("CompensationAmount")
                         .HasPrecision(12, 2)
                         .HasColumnType("decimal(12,2)")
@@ -179,13 +177,28 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                         .HasColumnType("varchar(1000)")
                         .HasColumnName("description");
 
+                    b.Property<decimal>("EstimatedDamageAmount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)")
+                        .HasColumnName("estimated_damage_amount");
+
                     b.Property<DateTime>("IncidentDate")
                         .HasColumnType("date")
                         .HasColumnName("incident_date");
 
+                    b.Property<string>("IncidentLocation")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("incident_location");
+
                     b.Property<long>("PolicyId")
                         .HasColumnType("bigint")
                         .HasColumnName("policy_id");
+
+                    b.Property<DateTimeOffset>("ReportedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("reported_at");
 
                     b.Property<DateTimeOffset?>("ResolvedAt")
                         .HasColumnType("datetime")
@@ -207,10 +220,6 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
 
                     b.HasKey("Id")
                         .HasName("p_k_vehicle_claims");
-
-                    b.HasIndex("ClaimNumber")
-                        .IsUnique()
-                        .HasDatabaseName("i_x_vehicle_claims_claim_number");
 
                     b.HasIndex("PolicyId")
                         .HasDatabaseName("i_x_vehicle_claims_policy_id");

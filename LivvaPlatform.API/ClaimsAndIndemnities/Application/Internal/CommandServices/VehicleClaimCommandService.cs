@@ -4,7 +4,7 @@ using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Aggregates;
 using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Commands;
 using LivvaPlatform.API.ClaimsAndIndemnities.Domain.Model.Repositories;
 using LivvaPlatform.API.IdentityAndProfileManagement.Interfaces.ACL;
-using LivvaPlatform.API.PolicyManagement.Domain.Repositories;
+using LivvaPlatform.API.PolicyManagement.Interfaces.ACL;
 using LivvaPlatform.API.Shared.Application.Patterns;
 using LivvaPlatform.API.Shared.Domain.Repositories;
 
@@ -14,13 +14,13 @@ namespace LivvaPlatform.API.ClaimsAndIndemnities.Application.Internal.CommandSer
 ///     Application service that registers vehicle claims and handles status changes.
 /// </summary>
 /// <param name="vehicleClaimRepository">Repository for accessing vehicle claims.</param>
-/// <param name="policyRepository">Repository for verifying insurance policies.</param>
+/// <param name="policyManagementContextFacade">ACL facade to verify that the policy exists.</param>
 /// <param name="iamContextFacade">Facade for verifying users.</param>
 /// <param name="unitOfWork">Unit of work for managing transactions.</param>
 /// <param name="logger">Logger for diagnostic and error reporting.</param>
 public class VehicleClaimCommandService(
     IVehicleClaimRepository vehicleClaimRepository,
-    IPolicyRepository policyRepository,
+    IPolicyManagementContextFacade policyManagementContextFacade,
     IIamContextFacade iamContextFacade,
     IUnitOfWork unitOfWork,
     ILogger<VehicleClaimCommandService> logger) : IVehicleClaimCommandService
@@ -33,9 +33,7 @@ public class VehicleClaimCommandService(
         if (!await iamContextFacade.UserExistsAsync(command.UserId, cancellationToken))
             return new Result<VehicleClaim, VehicleClaimError>.Failure(VehicleClaimError.UserNotFound);
 
-        var policy = await policyRepository.FindByIdAsync(command.PolicyId, cancellationToken);
-
-        if (policy is null)
+        if (!await policyManagementContextFacade.PolicyExistsAsync(command.PolicyId, cancellationToken))
             return new Result<VehicleClaim, VehicleClaimError>.Failure(VehicleClaimError.PolicyNotFound);
 
         VehicleClaim vehicleClaim;

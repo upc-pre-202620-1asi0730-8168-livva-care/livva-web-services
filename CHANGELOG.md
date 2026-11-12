@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-12
+
+First release of the Livva RESTful Web Services for AV2, with the six bounded contexts of the report.
+
 ### Added
 
 - Identity and Profile Management bounded context: `users` and `user_profiles` tables, sign-up and sign-in with BCrypt password hashing and JWT access tokens, and the `/api/v1/users` and `/api/v1/user-profiles` endpoints (GET, POST and PATCH).
@@ -20,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Subscription Management bounded context: subscription plans (with the plans of the Web Application), user subscriptions and subscription payments under `/api/v1/subscription-plans`, `/api/v1/user-subscriptions` and `/api/v1/subscription-payments`.
 - `POST /api/v1/payment-orders`, which creates orders in the Mercado Pago Orders API keeping the access token on the server.
 - Notification Management bounded context: notifications under `/api/v1/notifications` (filter by user, create policy expiration notices without duplicates, and mark as read with PATCH).
+- Claims and Indemnities bounded context: vehicle claims with their status history and life indemnity requests under `/api/v1/vehicle-claims`, `/api/v1/claim-status-histories` and `/api/v1/indemnity-requests`, aligned with the database design of the report and the routes of the Web Application.
 
 ## [0.1.0] - 2026-11-08
 

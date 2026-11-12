@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -41,14 +41,14 @@ namespace LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Migrations
                 table: "vehicle_claims",
                 type: "datetime",
                 nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                defaultValueSql: "'2026-01-01 00:00:00'");
 
             migrationBuilder.AddColumn<DateTimeOffset>(
                 name: "submitted_at",
                 table: "indemnity_requests",
                 type: "datetime",
                 nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                defaultValueSql: "'2026-01-01 00:00:00'");
         }
 
         /// <inheritdoc />

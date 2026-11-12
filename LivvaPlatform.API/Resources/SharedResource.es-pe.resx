@@ -1,0 +1,221 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>    <data name="UnexpectedServerError" xml:space="preserve">
+        <value>Error inesperado del servidor</value>
+    </data>
+    <data name="UnexpectedErrorProcessingRequest" xml:space="preserve">
+        <value>Ocurrió un error inesperado al procesar su solicitud.</value>
+    </data>
+    <data name="InvalidModelStateTitle" xml:space="preserve">
+        <value>La solicitud contiene valores no válidos.</value>
+    </data>
+    <data name="EmailAlreadyRegistered" xml:space="preserve">
+        <value>El correo electrónico ya está registrado.</value>
+    </data>
+    <data name="InvalidCredentials" xml:space="preserve">
+        <value>El correo electrónico o la contraseña son incorrectos.</value>
+    </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>No se encontró el usuario.</value>
+    </data>
+    <data name="UserProfileNotFound" xml:space="preserve">
+        <value>No se encontró el perfil del usuario.</value>
+    </data>
+    <data name="UserProfileAlreadyExists" xml:space="preserve">
+        <value>El usuario ya tiene un perfil.</value>
+    </data>
+    <data name="RequiredFirstName" xml:space="preserve">
+        <value>El nombre es obligatorio.</value>
+    </data>
+    <data name="InvalidFirstName" xml:space="preserve">
+        <value>El nombre debe tener entre 2 y 100 caracteres.</value>
+    </data>
+    <data name="RequiredLastName" xml:space="preserve">
+        <value>El apellido es obligatorio.</value>
+    </data>
+    <data name="InvalidLastName" xml:space="preserve">
+        <value>El apellido debe tener entre 2 y 100 caracteres.</value>
+    </data>
+    <data name="RequiredEmail" xml:space="preserve">
+        <value>El correo electrónico es obligatorio.</value>
+    </data>
+    <data name="InvalidEmail" xml:space="preserve">
+        <value>El correo electrónico no es válido.</value>
+    </data>
+    <data name="RequiredPassword" xml:space="preserve">
+        <value>La contraseña es obligatoria.</value>
+    </data>
+    <data name="InvalidPassword" xml:space="preserve">
+        <value>La contraseña debe tener al menos 6 caracteres.</value>
+    </data>
+    <data name="RequiredUserId" xml:space="preserve">
+        <value>El identificador del usuario es obligatorio.</value>
+    </data>
+    <data name="RequiredDocumentType" xml:space="preserve">
+        <value>El tipo de documento es obligatorio.</value>
+    </data>
+    <data name="RequiredDocumentNumber" xml:space="preserve">
+        <value>El número de documento es obligatorio.</value>
+    </data>
+    <data name="InsurerNotFound" xml:space="preserve">
+        <value>No se encontró la aseguradora.</value>
+    </data>
+    <data name="InsuranceProductNotFound" xml:space="preserve">
+        <value>No se encontró el producto de seguro.</value>
+    </data>
+    <data name="InsuranceProductNotAvailable" xml:space="preserve">
+        <value>El producto de seguro no existe o no está disponible.</value>
+    </data>
+    <data name="InvalidInsuranceType" xml:space="preserve">
+        <value>El tipo de seguro debe ser vehicle o life.</value>
+    </data>
+    <data name="VehicleNotFound" xml:space="preserve">
+        <value>No se encontró el vehículo.</value>
+    </data>
+    <data name="LicensePlateAlreadyRegistered" xml:space="preserve">
+        <value>La placa ya está registrada.</value>
+    </data>
+    <data name="VehicleInUse" xml:space="preserve">
+        <value>El vehículo está asociado a una solicitud de seguro y no se puede eliminar.</value>
+    </data>
+    <data name="InsuranceApplicationNotFound" xml:space="preserve">
+        <value>No se encontró la solicitud de seguro.</value>
+    </data>
+    <data name="ProductTypeMismatch" xml:space="preserve">
+        <value>El producto de seguro de la solicitud no corresponde a este tipo de solicitud.</value>
+    </data>
+    <data name="ApplicationAlreadyLinked" xml:space="preserve">
+        <value>La solicitud de seguro ya tiene datos vehiculares o de vida.</value>
+    </data>
+    <data name="BeneficiaryNotFound" xml:space="preserve">
+        <value>No se encontró el beneficiario.</value>
+    </data>
+    <data name="RequiredLicensePlate" xml:space="preserve">
+        <value>La placa es obligatoria.</value>
+    </data>
+    <data name="RequiredBrand" xml:space="preserve">
+        <value>La marca es obligatoria.</value>
+    </data>
+    <data name="RequiredModel" xml:space="preserve">
+        <value>El modelo es obligatorio.</value>
+    </data>
+    <data name="InvalidManufactureYear" xml:space="preserve">
+        <value>El año de fabricación no es válido.</value>
+    </data>
+    <data name="InvalidAmount" xml:space="preserve">
+        <value>El monto debe ser mayor que cero.</value>
+    </data>
+    <data name="RequiredProductId" xml:space="preserve">
+        <value>El identificador del producto de seguro es obligatorio.</value>
+    </data>
+    <data name="RequiredApplicationId" xml:space="preserve">
+        <value>El identificador de la solicitud de seguro es obligatorio.</value>
+    </data>
+    <data name="RequiredVehicleId" xml:space="preserve">
+        <value>El identificador del vehículo es obligatorio.</value>
+    </data>
+    <data name="RequiredPolicyId" xml:space="preserve">
+        <value>El identificador de la póliza es obligatorio.</value>
+    </data>
+    <data name="RequiredFullName" xml:space="preserve">
+        <value>El nombre completo es obligatorio.</value>
+    </data>
+    <data name="RequiredRelationship" xml:space="preserve">
+        <value>El parentesco es obligatorio.</value>
+    </data>
+    <data name="InvalidParticipationPercentage" xml:space="preserve">
+        <value>El porcentaje de participación debe ser mayor que 0 y como máximo 100.</value>
+    </data>
+    <data name="PolicyNotFound" xml:space="preserve">
+        <value>No se encontró la póliza.</value>
+    </data>
+    <data name="PolicyNumberAlreadyRegistered" xml:space="preserve">
+        <value>El número de póliza ya está registrado.</value>
+    </data>
+    <data name="PolicyNotRenewable" xml:space="preserve">
+        <value>La póliza no se puede renovar en su estado actual.</value>
+    </data>
+    <data name="RenewalAlreadyRequested" xml:space="preserve">
+        <value>La póliza ya tiene una solicitud de renovación en curso.</value>
+    </data>
+    <data name="RenewalNotFound" xml:space="preserve">
+        <value>No se encontró la renovación.</value>
+    </data>
+    <data name="PolicyCoverageNotFound" xml:space="preserve">
+        <value>No se encontró la cobertura de la póliza.</value>
+    </data>
+    <data name="PolicyDocumentNotFound" xml:space="preserve">
+        <value>No se encontró el documento de la póliza.</value>
+    </data>
+    <data name="RequiredPolicyNumber" xml:space="preserve">
+        <value>El número de póliza es obligatorio.</value>
+    </data>
+    <data name="SubscriptionPlanNotFound" xml:space="preserve">
+        <value>No se encontró el plan de suscripción.</value>
+    </data>
+    <data name="SubscriptionPlanNotAvailable" xml:space="preserve">
+        <value>El plan de suscripción no existe o no está disponible.</value>
+    </data>
+    <data name="ActiveSubscriptionExists" xml:space="preserve">
+        <value>El usuario ya tiene una suscripción activa.</value>
+    </data>
+    <data name="UserSubscriptionNotFound" xml:space="preserve">
+        <value>No se encontró la suscripción.</value>
+    </data>
+    <data name="SubscriptionNotActive" xml:space="preserve">
+        <value>La suscripción no está activa.</value>
+    </data>
+    <data name="SubscriptionPaymentNotFound" xml:space="preserve">
+        <value>No se encontró el pago de la suscripción.</value>
+    </data>
+    <data name="InvalidBillingCycle" xml:space="preserve">
+        <value>El ciclo de facturación debe ser monthly o annual.</value>
+    </data>
+    <data name="InvalidSubscriptionStatus" xml:space="preserve">
+        <value>Solo se admite el estado cancelled.</value>
+    </data>
+    <data name="InvalidPaymentStatus" xml:space="preserve">
+        <value>El estado del pago debe ser pending, approved o failed.</value>
+    </data>
+    <data name="RequiredPlanId" xml:space="preserve">
+        <value>El identificador del plan es obligatorio.</value>
+    </data>
+    <data name="RequiredUserSubscriptionId" xml:space="preserve">
+        <value>El identificador de la suscripción es obligatorio.</value>
+    </data>
+    <data name="RequiredProvider" xml:space="preserve">
+        <value>El proveedor de pago es obligatorio.</value>
+    </data>
+    <data name="PaymentProviderNotConfigured" xml:space="preserve">
+        <value>Mercado Pago no está configurado.</value>
+    </data>
+    <data name="PaymentProviderUnavailable" xml:space="preserve">
+        <value>No se pudo contactar con Mercado Pago.</value>
+    </data>
+    <data name="NotificationNotFound" xml:space="preserve">
+        <value>No se encontró la notificación.</value>
+    </data>
+    <data name="NotificationAlreadyExists" xml:space="preserve">
+        <value>El usuario ya tiene una notificación de este tipo para la póliza.</value>
+    </data>
+    <data name="InvalidNotificationUpdate" xml:space="preserve">
+        <value>Solo se admite marcar la notificación como leída (isRead = true).</value>
+    </data>
+    <data name="RequiredNotificationType" xml:space="preserve">
+        <value>El tipo de notificación es obligatorio.</value>
+    </data>
+</root>

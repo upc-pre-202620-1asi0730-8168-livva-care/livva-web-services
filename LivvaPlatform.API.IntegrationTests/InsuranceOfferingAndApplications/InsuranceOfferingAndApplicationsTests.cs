@@ -131,6 +131,29 @@ public class InsuranceOfferingAndApplicationsTests(LivvaWebApplicationFactory fa
     }
 
     [Fact]
+    public async Task Application_CancelAsUsedByWebApplication_ShouldWork()
+    {
+        var (client, userId) = await AuthenticatedClientAsync();
+        var application = await client.PostAsJsonAsync("/api/v1/insurance-applications",
+            new { userId, productId = 4, requestedCoverage = 80000 });
+        var applicationId = (await application.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("id").GetInt64();
+
+        var invalid = await client.PatchAsJsonAsync($"/api/v1/insurance-applications/{applicationId}", new { status = "unknown" });
+        Assert.Equal(HttpStatusCode.BadRequest, invalid.StatusCode);
+
+        var cancel = await client.PatchAsJsonAsync($"/api/v1/insurance-applications/{applicationId}",
+            new { status = "cancelled", updatedAt = DateTimeOffset.UtcNow });
+        Assert.Equal(HttpStatusCode.OK, cancel.StatusCode);
+        Assert.Equal("cancelled", (await cancel.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("status").GetString());
+
+        var again = await client.PatchAsJsonAsync($"/api/v1/insurance-applications/{applicationId}", new { status = "cancelled" });
+        Assert.Equal(HttpStatusCode.Conflict, again.StatusCode);
+
+        var missing = await client.PatchAsJsonAsync("/api/v1/insurance-applications/999999", new { status = "cancelled" });
+        Assert.Equal(HttpStatusCode.NotFound, missing.StatusCode);
+    }
+
+    [Fact]
     public async Task Beneficiaries_CreateFilterAndPatch_ShouldWork()
     {
         var (client, _) = await AuthenticatedClientAsync();

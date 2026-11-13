@@ -75,6 +75,15 @@ public static class ResourceAssembler
     public static CreateInsuranceApplicationCommand ToCommand(CreateInsuranceApplicationResource r) =>
         new(r.UserId, r.ProductId, r.RequestedCoverage);
 
+    /// <summary>Converts a resource into a change insurance application status command.</summary>
+    /// <param name="applicationId">The identifier of the application.</param>
+    /// <param name="r">The resource.</param>
+    /// <returns>The command, or <c>null</c> when the status is not valid.</returns>
+    public static ChangeInsuranceApplicationStatusCommand? ToCommand(long applicationId, ChangeInsuranceApplicationStatusResource r) =>
+        EnumValueConverter.TryParse<RequestStatus>(r.Status, out var status)
+            ? new ChangeInsuranceApplicationStatusCommand(applicationId, status)
+            : null;
+
     /// <summary>Converts a resource into a create vehicle insurance application command.</summary>
     /// <param name="r">The resource.</param>
     /// <returns>The command.</returns>

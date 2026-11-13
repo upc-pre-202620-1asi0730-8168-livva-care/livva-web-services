@@ -85,6 +85,37 @@ public class InsuranceApplicationsController(
             : Ok(ResourceAssembler.ToResource(application));
     }
 
+    /// <summary>Changes the status of an insurance application (for example, the applicant cancels it).</summary>
+    /// <param name="applicationId">The identifier of the application.</param>
+    /// <param name="resource">The new status (<c>under_review</c>, <c>approved</c>, <c>rejected</c> or <c>cancelled</c>).</param>
+    /// <param name="cancellationToken">Token to cancel the asynchronous operation.</param>
+    /// <returns>The updated application.</returns>
+    /// <response code="200">The status was changed.</response>
+    /// <response code="400">The status is not valid.</response>
+    /// <response code="404">The application does not exist.</response>
+    /// <response code="409">The application cannot change to that status.</response>
+    [HttpPatch("{applicationId:long}")]
+    [ProducesResponseType(typeof(InsuranceApplicationResource), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+    public async Task<ActionResult> ChangeInsuranceApplicationStatus(long applicationId,
+        [FromBody] ChangeInsuranceApplicationStatusResource resource, CancellationToken cancellationToken)
+    {
+        var command = ResourceAssembler.ToCommand(applicationId, resource);
+        if (command is null)
+            return InsuranceApplicationProblemMapper.ToProblem(this, localizer, InsuranceApplicationError.InvalidData);
+
+        var result = await commandService.Handle(command, cancellationToken);
+        return result switch
+        {
+            Result<InsuranceApplication, InsuranceApplicationError>.Success s => Ok(ResourceAssembler.ToResource(s.Value)),
+            Result<InsuranceApplication, InsuranceApplicationError>.Failure f =>
+                InsuranceApplicationProblemMapper.ToProblem(this, localizer, f.Error),
+            _ => Problem(statusCode: StatusCodes.Status500InternalServerError)
+        };
+    }
+
     /// <summary>Deletes an insurance application together with its vehicle or life details.</summary>
     /// <param name="applicationId">The identifier of the application.</param>
     /// <param name="cancellationToken">Token to cancel the asynchronous operation.</param>

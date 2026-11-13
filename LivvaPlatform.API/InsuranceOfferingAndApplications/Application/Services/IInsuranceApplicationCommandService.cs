@@ -17,6 +17,12 @@ public interface IInsuranceApplicationCommandService
     /// <returns>The created application or an error.</returns>
     Task<Result<InsuranceApplication, InsuranceApplicationError>> Handle(CreateInsuranceApplicationCommand command, CancellationToken cancellationToken = default);
 
+    /// <summary>Changes the status of an insurance application.</summary>
+    /// <param name="command">The command.</param>
+    /// <param name="cancellationToken">Token to cancel the asynchronous operation.</param>
+    /// <returns>The updated application or an error.</returns>
+    Task<Result<InsuranceApplication, InsuranceApplicationError>> Handle(ChangeInsuranceApplicationStatusCommand command, CancellationToken cancellationToken = default);
+
     /// <summary>Deletes an insurance application and its details.</summary>
     /// <param name="command">The command.</param>
     /// <param name="cancellationToken">Token to cancel the asynchronous operation.</param>

@@ -33,6 +33,7 @@ public static class InsuranceApplicationProblemMapper
         InsuranceApplicationError.VehicleNotFound => controller.Problem(title: localizer["VehicleNotFound"].Value, statusCode: StatusCodes.Status404NotFound),
         InsuranceApplicationError.ProductTypeMismatch => controller.Problem(title: localizer["ProductTypeMismatch"].Value, statusCode: StatusCodes.Status409Conflict),
         InsuranceApplicationError.ApplicationAlreadyLinked => controller.Problem(title: localizer["ApplicationAlreadyLinked"].Value, statusCode: StatusCodes.Status409Conflict),
+        InsuranceApplicationError.InvalidStatusChange => controller.Problem(title: localizer["InvalidApplicationStatusChange"].Value, statusCode: StatusCodes.Status409Conflict),
         _ => controller.Problem(title: localizer["InvalidModelStateTitle"].Value, statusCode: StatusCodes.Status400BadRequest)
     };
 }

@@ -218,4 +218,7 @@
     <data name="RequiredNotificationType" xml:space="preserve">
         <value>El tipo de notificación es obligatorio.</value>
     </data>
+    <data name="InvalidApplicationStatusChange" xml:space="preserve">
+        <value>La solicitud de seguro no puede cambiar al estado indicado.</value>
+    </data>
 </root>

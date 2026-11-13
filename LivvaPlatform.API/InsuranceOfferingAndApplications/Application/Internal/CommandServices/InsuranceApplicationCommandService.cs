@@ -58,6 +58,36 @@ public class InsuranceApplicationCommandService(
     }
 
     /// <inheritdoc />
+    public async Task<Result<InsuranceApplication, InsuranceApplicationError>> Handle(ChangeInsuranceApplicationStatusCommand command, CancellationToken cancellationToken = default)
+    {
+        var application = await applicationRepository.FindByIdAsync(command.ApplicationId, cancellationToken);
+        if (application is null)
+            return new Result<InsuranceApplication, InsuranceApplicationError>.Failure(InsuranceApplicationError.ApplicationNotFound);
+
+        try
+        {
+            switch (command.Status)
+            {
+                case RequestStatus.UNDER_REVIEW: application.StartEvaluation(); break;
+                case RequestStatus.APPROVED: application.Approve(); break;
+                case RequestStatus.REJECTED: application.Reject(); break;
+                case RequestStatus.CANCELLED: application.Cancel(); break;
+                default:
+                    return new Result<InsuranceApplication, InsuranceApplicationError>.Failure(InsuranceApplicationError.InvalidStatusChange);
+            }
+        }
+        catch (InvalidOperationException ex)
+        {
+            logger.LogWarning(ex, "Invalid status change for insurance application {ApplicationId}", command.ApplicationId);
+            return new Result<InsuranceApplication, InsuranceApplicationError>.Failure(InsuranceApplicationError.InvalidStatusChange);
+        }
+
+        applicationRepository.Update(application);
+        await unitOfWork.CompleteAsync(cancellationToken);
+        return new Result<InsuranceApplication, InsuranceApplicationError>.Success(application);
+    }
+
+    /// <inheritdoc />
     public async Task<Result<InsuranceApplication, InsuranceApplicationError>> Handle(DeleteInsuranceApplicationCommand command, CancellationToken cancellationToken = default)
     {
         var application = await applicationRepository.FindByIdAsync(command.ApplicationId, cancellationToken);

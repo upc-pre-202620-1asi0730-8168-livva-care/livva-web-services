@@ -218,4 +218,7 @@
     <data name="RequiredNotificationType" xml:space="preserve">
         <value>The notification type is required.</value>
     </data>
+    <data name="InvalidApplicationStatusChange" xml:space="preserve">
+        <value>The insurance application cannot change to the requested status.</value>
+    </data>
 </root>

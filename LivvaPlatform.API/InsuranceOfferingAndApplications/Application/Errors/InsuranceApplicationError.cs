@@ -23,6 +23,9 @@ public enum InsuranceApplicationError
     /// <summary>The application already has vehicle or life details.</summary>
     ApplicationAlreadyLinked,
 
+    /// <summary>The application cannot change to the requested status.</summary>
+    InvalidStatusChange,
+
     /// <summary>The provided data is not valid.</summary>
     InvalidData
 }

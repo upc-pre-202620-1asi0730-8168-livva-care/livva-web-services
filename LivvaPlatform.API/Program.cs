@@ -54,6 +54,7 @@ using LivvaPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using LivvaPlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -262,6 +263,15 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
+// Railway terminates HTTPS at its proxy; trust X-Forwarded-* so the API (and the OpenAPI server URL) uses https.
+var forwardedHeadersOptions = new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+};
+forwardedHeadersOptions.KnownIPNetworks.Clear();
+forwardedHeadersOptions.KnownProxies.Clear();
+app.UseForwardedHeaders(forwardedHeadersOptions);
+
 app.UseExceptionHandler();
 
 // Localization must run before OpenAPI so generated documentation follows the request culture.

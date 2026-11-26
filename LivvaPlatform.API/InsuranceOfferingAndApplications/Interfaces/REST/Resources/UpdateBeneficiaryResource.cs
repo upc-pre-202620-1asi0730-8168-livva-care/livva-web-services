@@ -9,4 +9,4 @@ public record UpdateBeneficiaryResource(
     [StringLength(30)] string? DocumentNumber,
     [StringLength(50)] string? Relationship,
     DateOnly? BirthDate,
-    [Range(typeof(decimal), "0.01", "100", ErrorMessage = "InvalidParticipationPercentage")] decimal? ParticipationPercentage);
+    [Range(typeof(decimal), "0.01", "100", ParseLimitsInInvariantCulture = true, ConvertValueInInvariantCulture = true, ErrorMessage = "InvalidParticipationPercentage")] decimal? ParticipationPercentage);

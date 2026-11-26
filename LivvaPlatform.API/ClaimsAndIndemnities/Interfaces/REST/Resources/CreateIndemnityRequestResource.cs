@@ -19,5 +19,5 @@ public record CreateIndemnityRequestResource(
     [StringLength(1000, MinimumLength = 5, ErrorMessage = "InvalidIndemnityDescriptionLength")]
     string Description,
 
-    [Range(typeof(decimal), "0.01", "9999999999.99", ErrorMessage = "InvalidIndemnityAmount")]
+    [Range(typeof(decimal), "0.01", "9999999999.99", ParseLimitsInInvariantCulture = true, ConvertValueInInvariantCulture = true, ErrorMessage = "InvalidIndemnityAmount")]
     decimal? IndemnityAmount);

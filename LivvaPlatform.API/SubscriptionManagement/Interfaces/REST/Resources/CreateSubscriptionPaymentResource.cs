@@ -9,7 +9,7 @@ public record CreateSubscriptionPaymentResource(
     long PlanId,
     [Required(ErrorMessage = "RequiredProvider")] [StringLength(50)] string Provider,
     [StringLength(100)] string? ProviderPaymentId,
-    [Range(typeof(decimal), "0.01", "9999999999", ErrorMessage = "InvalidAmount")] decimal Amount,
+    [Range(typeof(decimal), "0.01", "9999999999", ParseLimitsInInvariantCulture = true, ConvertValueInInvariantCulture = true, ErrorMessage = "InvalidAmount")] decimal Amount,
     [Required] [StringLength(3, MinimumLength = 3)] string Currency,
     [Required(ErrorMessage = "InvalidPaymentStatus")] string Status,
     DateTimeOffset? PaidAt);

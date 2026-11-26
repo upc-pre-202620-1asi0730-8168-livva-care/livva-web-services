@@ -22,5 +22,5 @@ public record CreateVehicleClaimResource(
     [Required(ErrorMessage = "RequiredClaimDescription")]
     [StringLength(1000, MinimumLength = 5, ErrorMessage = "InvalidClaimDescriptionLength")]
     string Description,
-    [Range(typeof(decimal), "0.01", "9999999999.99", ErrorMessage = "InvalidEstimatedDamageAmount")]
+    [Range(typeof(decimal), "0.01", "9999999999.99", ParseLimitsInInvariantCulture = true, ConvertValueInInvariantCulture = true, ErrorMessage = "InvalidEstimatedDamageAmount")]
     decimal EstimatedDamageAmount);

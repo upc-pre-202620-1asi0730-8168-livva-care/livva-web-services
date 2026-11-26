@@ -8,4 +8,4 @@ public record UpdateVehicleResource(
     [StringLength(100)] string? Brand,
     [StringLength(100)] string? Model,
     [Range(1900, 2100, ErrorMessage = "InvalidManufactureYear")] int? ManufactureYear,
-    [Range(typeof(decimal), "0.01", "9999999999", ErrorMessage = "InvalidAmount")] decimal? EstimatedValue);
+    [Range(typeof(decimal), "0.01", "9999999999", ParseLimitsInInvariantCulture = true, ConvertValueInInvariantCulture = true, ErrorMessage = "InvalidAmount")] decimal? EstimatedValue);

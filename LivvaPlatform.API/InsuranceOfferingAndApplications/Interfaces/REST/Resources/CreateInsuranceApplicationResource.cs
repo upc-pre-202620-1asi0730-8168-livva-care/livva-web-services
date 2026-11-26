@@ -6,4 +6,4 @@ namespace LivvaPlatform.API.InsuranceOfferingAndApplications.Interfaces.REST.Res
 public record CreateInsuranceApplicationResource(
     [Range(1, long.MaxValue, ErrorMessage = "RequiredUserId")] long UserId,
     [Range(1, long.MaxValue, ErrorMessage = "RequiredProductId")] long ProductId,
-    [Range(typeof(decimal), "0.01", "9999999999", ErrorMessage = "InvalidAmount")] decimal RequestedCoverage);
+    [Range(typeof(decimal), "0.01", "9999999999", ParseLimitsInInvariantCulture = true, ConvertValueInInvariantCulture = true, ErrorMessage = "InvalidAmount")] decimal RequestedCoverage);

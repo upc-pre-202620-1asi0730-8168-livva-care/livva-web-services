@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-11-26
+
+### Fixed
+
+- Decimal range validations no longer fail with an unhandled exception (HTTP 500) when the request culture uses a comma as decimal separator (for example `es-PE` or `es-419`). The limits are now parsed with the invariant culture, which fixes registering vehicles, beneficiaries, applications, policies, claims, indemnity requests and payments from Spanish-language browsers.
+
 ## [1.0.0] - 2026-11-12
 
 First release of the Livva RESTful Web Services for AV2, with the six bounded contexts of the report.

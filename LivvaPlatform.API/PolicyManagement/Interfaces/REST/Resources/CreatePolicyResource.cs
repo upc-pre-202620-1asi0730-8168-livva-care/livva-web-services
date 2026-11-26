@@ -10,5 +10,5 @@ public record CreatePolicyResource(
     [Required(ErrorMessage = "InvalidInsuranceType")] string InsuranceType,
     DateOnly StartDate,
     DateOnly ExpirationDate,
-    [Range(typeof(decimal), "0.01", "9999999999", ErrorMessage = "InvalidAmount")] decimal PremiumAmount,
-    [Range(typeof(decimal), "0.01", "9999999999", ErrorMessage = "InvalidAmount")] decimal CoverageAmount);
+    [Range(typeof(decimal), "0.01", "9999999999", ParseLimitsInInvariantCulture = true, ConvertValueInInvariantCulture = true, ErrorMessage = "InvalidAmount")] decimal PremiumAmount,
+    [Range(typeof(decimal), "0.01", "9999999999", ParseLimitsInInvariantCulture = true, ConvertValueInInvariantCulture = true, ErrorMessage = "InvalidAmount")] decimal CoverageAmount);
